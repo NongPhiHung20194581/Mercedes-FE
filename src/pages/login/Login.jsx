@@ -66,7 +66,7 @@ export default function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const id = accountIds[userId - 1];
+        const id = accountIds[1];
 
         loginUser(id)
             .then(res => {
