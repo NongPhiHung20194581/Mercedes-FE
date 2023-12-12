@@ -26,19 +26,19 @@ export const links = [
 
 export const link1 = [
     {
-        name: 'Login',
+        name: 'Đăng nhập',
         title: 'login',
         path: ROUTE.LOGIN,
         isLogin: false,
         className: 'nav-link-login button-48'
     },
-    {
-        name: 'Sign up',
-        title: 'register',
-        path: ROUTE.SIGNUP,
-        isLogin: false,
-        className: 'nav-link-signup button-48'
-    }
+    // {
+    //     name: 'Sign up',
+    //     title: 'register',
+    //     path: ROUTE.SIGNUP,
+    //     isLogin: false,
+    //     className: 'nav-link-signup button-48'
+    // }
 ]
 
 export const link2 = [

@@ -14,9 +14,13 @@
         width: 72px;
         height: 72px;
         overflow: hidden;
-        border-radius: 50%;
+        // border-radius: 100%;
         cursor: pointer;
-        margin-right: 10px;
+        margin-left: 50px;
+    }
+    .img_logo{
+        width:auto;
+        height:100%;
     }
     .title-header{
         color: white;
@@ -50,8 +54,9 @@
         }
 
         .nav-link-login {
-            background-color: var(--primary-color);
+            background-color:#9C2C30;
             color: #fff;
+            border: 1px solid ;
         }
 
         .nav-link-signup {

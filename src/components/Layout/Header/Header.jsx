@@ -20,7 +20,7 @@ const Header = () => {
         <div className='app-header'>
             
              <Link className="app-logo" to={ROUTE.HOME} >
-                <img src={require("../../../assets/img/logo1.png")} alt="" />
+                <img class="img_logo" src={require("../../../assets/img/logo1.png")} alt="" />
    
             </Link>
             <div className="title-header">
@@ -47,7 +47,7 @@ const Header = () => {
                     :
                     <>{link1.map(link => (
                         <Link
-                            className={`nav-links__item ${link.className}`}
+                            className={`nav-links__item  ${link.className}`}
                             key={link.title}
                             to={link.path}
                         >
