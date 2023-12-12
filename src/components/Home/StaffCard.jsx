@@ -20,7 +20,15 @@ const StaffCard = ({ staff }) => {
         }
         if(result.includes('>')) {
             result = result.replace('>', '');
-            result += '+';
+        }
+        if(result.includes('1')) {
+            result = 'Newbie';
+        }
+        if(result.includes('2')) {
+            result = 'Moderate';
+        }
+        if(result.includes('3')) {
+            result = 'Years of Experience';
         }
         return result;
     }, [staff])
@@ -81,7 +89,7 @@ const StaffCard = ({ staff }) => {
                 </div>
                 <div className="staff-card__item staff-card__experience">
                     <span>
-                    Experience {teachExp}
+                    {teachExp}
                     </span>
                     
                 </div>
