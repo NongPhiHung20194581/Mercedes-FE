@@ -109,7 +109,7 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                     <h1 class="title">
                         予約確認
                     </h1>
-                    <span class="subtitle">スタッフ名</span>
+                    <span class="subtitle">スタッフ名1</span>
                     <Box
                         sx={{
                             backgroundColor: '#d6d6d6',

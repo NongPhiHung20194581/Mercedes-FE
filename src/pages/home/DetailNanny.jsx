@@ -309,12 +309,12 @@ export default function DetailNanny() {
 
                     <div className={styles.container1}>
                         <div className={styles.leftBox}>
-                            <label className={styles.labelName}>スタッフ名</label>
+                            <label className={styles.labelName}>Name</label>
                             <span className={styles.inputField}>
                                 <p className={styles.inputFieldText}>{nanny.full_name}</p>
                             </span>
 
-                            <label className={styles.labelName}>性別</label>
+                            <label className={styles.labelName}>Gender</label>
                             <ul>
                                 <li className={styles.font24}>
                                     <span className={styles.dot}></span>
@@ -323,24 +323,24 @@ export default function DetailNanny() {
                                 </li>
                             </ul>
 
-                            <label className={styles.labelName}>誕生日</label>
+                            <label className={styles.labelName}>Birthday</label>
                             <span className={styles.inputField}>
                                 <p className={styles.inputFieldText}>{nanny.birthday}</p>
                             </span>
 
-                            <label className={styles.labelName}>住所</label>
+                            <label className={styles.labelName}>Address</label>
                             <span className={styles.inputField}>
                                 <p className={styles.inputFieldText}>{nanny.address}</p>
                             </span>
 
                             <label className={styles.labelName}>
-                                料理経験
-                                <span
+                                Experience
+                                {/* <span
                                     className={styles.modalStaffDetailItemIcon}
                                     onClick={handleChangeCookingDetail}
-                                >
-                                    <BsEyeFill />
-                                </span>
+                                > */}
+                                    {/* <BsEyeFill /> */}
+                                {/* </span> */}
                             </label>
                             <CertificateModal
                                 isOpen={openCookingDetail}
@@ -351,7 +351,7 @@ export default function DetailNanny() {
                                 <p className={styles.inputFieldText}>{nanny.cook_exp}</p>
                             </span>
 
-                            <label className={styles.labelName}>
+                            {/* <label className={styles.labelName}>
                                 子供の世話経験
                                 <span
                                     className={styles.modalStaffDetailItemIcon}
@@ -359,23 +359,23 @@ export default function DetailNanny() {
                                 >
                                     <BsEyeFill />
                                 </span>
-                            </label>
+                            </label> */}
                             <CertificateModal
                                 isOpen={openChildcareDetail}
                                 onCloseModal={handleChangeChildcareDetail}
                                 renderData={nannyChildcareCertificate()}
                             />
-                            <span className={styles.inputField}>
+                            {/* <span className={styles.inputField}>
                                 <p className={styles.inputFieldText}>{nanny.care_exp}</p>
-                            </span>
+                            </span> */}
 
                             <label className={styles.labelName}>
-                                言語
+                                Languages
                                 <span
                                     className={styles.modalStaffDetailItemIcon}
                                     onClick={handleOpenLanguageDetail}
                                 >
-                                    <BsEyeFill />
+                                    {/* <BsEyeFill /> */}
                                 </span>
                             </label>
                             <CertificateModal
@@ -387,8 +387,8 @@ export default function DetailNanny() {
                                 <p className={styles.inputFieldText}>{nannyLanguagesString}</p>
                             </span>
 
-                            <label className={styles.labelName}>価格</label>
-                            <span className={styles.staffPrice}> {formatNumber(nanny.salary)} VND/日</span>
+                            {/* <label className={styles.labelName}>価格</label>
+                            <span className={styles.staffPrice}> {formatNumber(nanny.salary)} VND/日</span> */}
                         </div>
 
                         <div className={styles.rightBox}>
@@ -397,7 +397,7 @@ export default function DetailNanny() {
                             </div>
                             <div className={styles.starList}>
                                 <Rating
-                                    style={{ color: '#0d520d' }}
+                                    style={{ color: '#ffea00' }}
                                     name="read-only"
                                     value={calculateAverageRating(nanny.ratings)}
                                     readOnly
@@ -409,19 +409,19 @@ export default function DetailNanny() {
                                 <Box className={styles.BookOrReportButton}>
                                     <BookingButton
                                         variant="contained"
-                                        sx={{ marginRight: '100px', width: '200px', fontWeight: 600 }}
+                                        sx={{ marginRight: '100px', width: '200px', fontWeight: 600 , color: 'black'}}
                                         onClick={() => {
                                             setIsBooking(true);
                                         }}
                                     >
-                                        予約
+                                        Booking
                                     </BookingButton>
                                     <FeedbackButton
                                         variant="contained"
                                         onClick={handleOpen}
-                                        sx={{ width: '300px', fontWeight: 600 }}
+                                        sx={{ width: '300px', fontWeight: 600 , color: 'black'}}
                                     >
-                                        フィードバック
+                                        Report
                                     </FeedbackButton>
                                 </Box>
                                 <Modal
@@ -496,7 +496,7 @@ export default function DetailNanny() {
                         </div>
                     </div>
 
-                    <span className={styles.commentText}>コメント</span>
+                    {/* <span className={styles.commentText}>コメント</span> */}
                     <div
                         // ref={parent}
                         className={styles.container3}
@@ -550,7 +550,7 @@ export default function DetailNanny() {
                                 </Typography>
                             </Box>
                         </Modal>
-                        {nanny &&
+                        {/* {nanny &&
                             nanny.ratings.map((item, index) => (
                                 <div key={index} className={styles.prevComment}>
                                     <div className={styles.close}>
@@ -572,7 +572,7 @@ export default function DetailNanny() {
                                         {item.review}
                                     </span>
                                 </div>
-                            ))}{' '}
+                            ))}{' '} */}
                     </div>
                 </div>
             )}
