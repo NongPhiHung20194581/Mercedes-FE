@@ -149,13 +149,13 @@ const NannyFilter = ({
               color: 'white',
               marginLeft: '5%',
               pointerEvents: "none",
-              fontSize: '10px',
+              fontSize: '20px',
               fontWeight: '700',
             }}
           >
             Language
           </Button>
-          <Box marginLeft={'2%'} display={'flex'} flexDirection={'column'} width={'100%'} flexWrap={'wrap'} fontSize={'10px'}>
+          <Box marginLeft={'2%'} display={'flex'} flexDirection={'column'} width={'100%'} flexWrap={'wrap'} fontSize={'18px'}>
             {languages.map((item, key) => {
               return (
                 <div style={{ paddingLeft: '4%'}}>
@@ -187,14 +187,14 @@ const NannyFilter = ({
             color: 'white',
             marginLeft: '4%',
             pointerEvents: "none",
-            fontSize: '10px',
+            fontSize: '20px',
             fontWeight: '700',
           }}
             
           >
             Rating
           </Button>
-          <Box marginLeft={'2%'} display={'flex'} flexDirection={'column'} width={'100%'} flexWrap={'wrap'} fontSize={'10px'}>
+          <Box marginLeft={'2%'} display={'flex'} flexDirection={'column'} width={'100%'} flexWrap={'wrap'} fontSize={'18px'}>
             {ratings.map((item, key) => {
               return (
                 <div style={{ paddingLeft: '4%'}}>
@@ -245,13 +245,13 @@ const NannyFilter = ({
             color: 'white',
             marginLeft: '5%',
             pointerEvents: "none",
-            fontSize: '10px',
+            fontSize: '20px',
             fontWeight: '700',
           }}
           >
             Experience
           </Button>
-          <Box marginLeft={'2%'} display={'flex'} flexDirection={'column'} width={'100%'} flexWrap={'wrap'} fontSize={'10px'}>
+          <Box marginLeft={'2%'} display={'flex'} flexDirection={'column'} width={'100%'} flexWrap={'wrap'} fontSize={'18px'}>
             {cookings.map((item, key) => {
               return (
                 <div style={{ paddingLeft: '4%'}}>
