@@ -49,7 +49,7 @@ const Home = ({
                         </IconButton>
                     </Box>
                 </Box>
-                <div className="list-staffs__body">
+                <div className="list-staffs__body" style={{color:'#FF0000'}} >
                     {isLoading ?
                         <div className='list-staffs__loading'>
                             <EllipsisLoading />
@@ -71,7 +71,7 @@ const Home = ({
                     }
                 </div>
                 {nannies.length > 0 &&
-                    <div className="list-staffs__paging">
+                    <div className="list-staffs__paging" >
                         <CustomPaging
                             currentPage={currentPage}
                             totalPages={totalPages}

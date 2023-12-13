@@ -18,10 +18,13 @@ const Header = () => {
 
     return (
         <div className='app-header'>
-            <Link className="app-logo" to={ROUTE.HOME}>
-                <img src={require("../../../assets/img/logo.png")} alt="" />
+            
+            <Link className="app-logo" to={ROUTE.HOME} >
+                <img src={require("../../../assets/img/logo1.png")} alt="" />
+                
             </Link>
-            <div className="nav-links">
+            <h1 style={{color:'white'}}>Hệ thống quản trị đại học trực tuyến. <br/>Đại học bách khoa Hà Nội</h1>
+            <div className="nav-links" >
                 {isLogin ?
                     <>{link2.map(link => (
                         <div className={link.className}
