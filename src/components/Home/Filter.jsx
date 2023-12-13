@@ -286,7 +286,7 @@ const NannyFilter = ({
         </Typography>
         
 
-        <Typography component="div"
+        {/* <Typography component="div"
           className='filter-item'
         >
         <Button
@@ -360,7 +360,7 @@ const NannyFilter = ({
               max={2000000}
             />
           </Box>
-        </Typography>
+        </Typography> */}
 
         
 

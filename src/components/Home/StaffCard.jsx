@@ -85,7 +85,7 @@ const StaffCard = ({ staff }) => {
             <div className="staff-card__info">
                 <div className="staff-card__name-age-star">
                     <span>{getFirstName(staff.full_name)}, {getAge(staff?.birthday)}</span>
-                    <span>{roundNumber(calculateAverageRating(staff?.rating))} <IoStarSharp /></span>
+                    <span>{roundNumber(calculateAverageRating(staff?.rating))} <IoStarSharp size={40}/></span>
                 </div>
                 <div className="staff-card__item staff-card__experience">
                     <span>
