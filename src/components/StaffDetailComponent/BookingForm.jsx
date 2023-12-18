@@ -41,7 +41,7 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
     const handleBooking = () => {
         if (!userId) {
             setIsBooking(false);
-            toast.error("この機能を利用するにはログインしてください！", {
+            toast.error("Please login to use this feature!", {
                 position: "bottom-right",
                 autoClose: 4000,
                 hideProgressBar: false,
@@ -71,7 +71,7 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                 dispatch(offDualRingLoading())
                 Swal.fire({
                     title: 'Success',
-                    text: "予約に成功しました！",
+                    text: "Your reservation was successful!",
                     icon: 'success',
                     confirmButtonText: 'OK'
                 })
@@ -79,7 +79,7 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
             .catch(err => {
                 Swal.fire({
                     title: 'Failed',
-                    text: "予約に失敗しました!",
+                    text: "Reservation failed!",
                     icon: 'error',
                     confirmButtonText: 'OK'
                 })
@@ -106,10 +106,10 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                 padding={"20px 25px"}
             >
                 <Box width={'100%'} className="form-container">
-                    <h1 class="title">
-                        予約確認
+                    <h1 class="title">                    
+                    Booking Confirmation
                     </h1>
-                    <span class="subtitle">スタッフ名</span>
+                    <span class="subtitle">Staff Name</span>
                     <Box
                         sx={{
                             backgroundColor: '#d6d6d6',
@@ -123,7 +123,7 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                     </Box>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <div style={{ width: '49%' }}>
-                            <span class="subtitle">開始日</span>
+                            <span class="subtitle">Start Date</span>
                             <DatePicker
                                 showIcon
                                 selected={startDate}
@@ -134,7 +134,7 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                             />
                         </div>
                         <div style={{ width: '49%' }}>
-                            <span class="subtitle">終了日</span>
+                            <span class="subtitle">End Date</span>
                             <DatePicker
                                 showIcon
                                 selected={endDate}
@@ -150,8 +150,8 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                             />
                         </div>
                     </div>
-                    <span class="subtitle">合計</span>
-                    <Box
+                    {/* <span class="subtitle">合計</span> */}
+                    {/* <Box
                         sx={{
                             width: '49%',
                             backgroundColor: '#d6d6d6',
@@ -163,18 +163,19 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                         }}
                     >
                         {formatNumber(total)} VND
-                    </Box>
+                    </Box> */}
                     {/* <TextField
                                 multiline
                                 maxRows={4}
                                 sx={{margin: '10px 0', width: '80%'}}
                             /> */}
+                            <br />
                     <textarea
                         name="des"
                         id=""
                         cols="30"
                         rows="6"
-                        placeholder="スタッフ・管理者にメッセージを送信したい場合は、ここで書いてください"
+                        placeholder="If you would like to send a message to staff/administrators, please write here"
                         value={message}
                         onChange={(e) => {
                             setMessage(e.target.value);
@@ -209,7 +210,7 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                                 setIsBooking(false);
                             }}
                         >
-                            キャンセル
+                            Cancel
                         </Button>
                     </Box>
                 </Box>

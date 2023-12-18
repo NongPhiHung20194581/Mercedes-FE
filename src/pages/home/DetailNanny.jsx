@@ -63,6 +63,17 @@ export default function DetailNanny() {
     const [value, setValue] = useState(2);
     const [isBooking, setIsBooking] = useState(false);
     const [review, setReview] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [commentsPerPage] = useState(5); 
+
+
+    const indexOfLastComment = currentPage * commentsPerPage;
+    const indexOfFirstComment = indexOfLastComment - commentsPerPage;
+    const currentComments = nanny.ratings.slice(indexOfFirstComment, indexOfLastComment);
+
+    const totalPages = Math.ceil(nanny.ratings.length / commentsPerPage);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
     // const [parent, enableAnimations] = useAutoAnimate(/* optional config */)
 
     const fetchData = async () => {
@@ -286,263 +297,262 @@ export default function DetailNanny() {
         theme: "light",
     });;
 
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+    }
+
     return (
-        <div
-            className='main-session'
-        >
-            <ToastContainer
-                position="top-left"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
-            {/* {nanny && isLogin && ( */}
-            {nanny && (
-                <div>
-                    {
-                        isBooking && (
-                            <div
-                                style={BookingModalStyle}
-                            >
-                                <BookingForm
-                                    nanny={nanny}
-                                    setIsBooking={setIsBooking}
-                                    notify={notify}
-                                >
-                                </BookingForm>
-                            </div>
-                        )
-                    }
-
-
-                    <div className={styles.container1}>
-                        <div className={styles.leftBox}>
-                            <label className={styles.labelName}>Name</label>
-                            <span className={styles.inputField}>
-                                <p className={styles.inputFieldText}>{nanny.full_name}</p>
-                            </span>
-
-                            <label className={styles.labelName}>Gender</label>
-                            <ul>
-                                <li className={styles.font24}>
-                                    <span className={styles.dot}></span>
-
-                                    {nanny.gender === 'male' ? 'Male' : 'Female'}
-                                </li>
-                            </ul>
-
-                            <label className={styles.labelName}>Birthday</label>
-                            <span className={styles.inputField}>
-                                <p className={styles.inputFieldText}>{nanny.birthday}</p>
-                            </span>
-
-                            <label className={styles.labelName}>Address</label>
-                            <span className={styles.inputField}>
-                                <p className={styles.inputFieldText}>{nanny.address}</p>
-                            </span>
-
-                            <label className={styles.labelName}>Experience</label>
-                            <span className={styles.inputField}>
-                                <p className={styles.inputFieldText}>{formatExperience(nanny.cook_exp)}</p>
-                            </span>
-                            <label className={styles.labelName}>
-                                Languages
-                            </label>
-                            <span className={styles.inputField}>
-                                <p className={styles.inputFieldText}>{nannyLanguagesString}</p>
-                            </span>
-                        </div>
-
-                        <div className={styles.rightBox}>
-                            <div className={styles.imgDiv}>
-                                <img className={styles.staffImg} src={nanny.image_link} alt="" />
-                            </div>
-                            <div className={styles.starList}>
-                                <Rating
-                                    style={{ color: '#0d520d' }}
-                                    name="read-only"
-                                    value={calculateAverageRating(nanny.ratings)}
-                                    readOnly
-                                    precision={0.1}
-                                    sx={{ fontSize: '58px' }}
-                                />
-                            </div>
-                            <div className={styles.BookOrReport}>
-                                <Box className={styles.BookOrReportButton}>
-                                    <BookingButton
-                                        variant="contained"
-                                        sx={{ marginRight: '100px', width: '200px', fontWeight: 600 }}
-                                        onClick={() => {
-                                            setIsBooking(true);
-                                        }}
-                                    >
-                                        Booking
-                                    </BookingButton>
-                                    <FeedbackButton
-                                        variant="contained"
-                                        onClick={handleOpen}
-                                        sx={{ width: '300px', fontWeight: 600 }}
-                                    >
-                                        Feedback
-                                    </FeedbackButton>
-                                </Box>
-                                <Modal
-                                    open={open}
-                                    onClose={handleClose}
-                                    aria-labelledby="modal-modal-title"
-                                    aria-describedby="modal-modal-description"
-                                    closeAfterTransition
-                                    sx={{
-                                        zIndex: 1000
-                                    }}
-                                >
-                                    {/* Modal Feedback */}
-                                    <Box sx={style} borderRadius={5} border="1px solid">
-                                        <Typography
-                                            id="modal-modal-title"
-                                            variant="h6"
-                                            component="h2"
-                                            fontWeight="bold"
-                                            fontSize="28px"
-                                        >
-                                            Feedback
-                                        </Typography>
-                                        <Typography id="modal-modal-description" sx={{ mt: 2 }} fontWeight="bold">
-                                            Stars
-                                        </Typography>
-                                        <Typography sx={{ marginLeft: 8 }}>
-                                            <Rating
-                                                sx={{ color: '#4d4dff' }}
-                                                size="large"
-                                                name="simple-controlled"
-                                                value={value}
-                                                onChange={(event, newValue) => {
-                                                    setValue(newValue);
-                                                }}
-                                            />
-                                        </Typography>
-
-                                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                                            <textarea
-                                                style={{
-                                                    width: '90%',
-                                                    height: '100px',
-                                                    borderRadius: '20px',
-                                                    padding: '25px',
-                                                    marginLeft: '15px',
-                                                }}
-                                                aria-label="empty textarea"
-                                                placeholder="Write comment"
-                                                minRows={3}
-                                                value={review}
-                                                onChange={(e) => setReview(e.target.value)}
-                                            />
-                                        </Typography>
-
-                                        <Typography
-                                            sx={{
-                                                marginTop: '20px',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                display: 'flex',
-                                            }}
-                                        >
-                                            <MyButton onClick={FeedBack} sx={{ marginRight: '25px' }}>
-                                                OK
-                                            </MyButton>
-                                            <MyButton onClick={handleClose}>Cancel</MyButton>
-                                        </Typography>
-                                    </Box>
-                                </Modal>
-                            </div>
-                        </div>
-                    </div>
-
-                    <span className={styles.commentText}>Comments</span>
-                    <div
-                        // ref={parent}
-                        className={styles.container3}
-                    >
-                        <Modal
-                            open={openDelete}
-                            onClose={handleCloseDelete}
-                            aria-labelledby="modal-modal-title1"
-                            aria-describedby="modal-modal-description1"
-                        >
-                            {/* Modal delete */}
-                            <Box sx={styleDelete} borderRadius={5} border="1px solid">
-                                <Typography
-                                    id="modal-modal-title1"
-                                    variant="h6"
-                                    component="h2"
-                                    fontWeight="bold"
-                                    fontSize="28px"
-                                    textAlign={'center'}
-                                >
-                                    Delete comment?
-                                </Typography>
-                                <Typography
-                                    id="modal-modal-description"
-                                    sx={{ mt: 2 }}
-                                    fontWeight="semibold"
-                                    textAlign={'center'}
-                                >
-                                    Are you sure you want to delete this comment?
-                                </Typography>
-
-                                <Typography
-                                    sx={{
-                                        marginTop: '20px',
-                                        alignItems: 'center',
-                                        display: 'flex',
-                                        justifyContent: 'space-evenly',
-                                    }}
-                                >
-                                    <MyButton
-                                        onClick={handleCloseDelete}
-                                    >
-                                        Cancel
-                                    </MyButton>
-                                    <MyButton
-                                        onClick={() => handleDeleteCMT(1)}
-                                    >
-                                        Delete
-                                    </MyButton>
-                                </Typography>
-                            </Box>
-                        </Modal>
-                        {/* {nanny &&
-                            nanny.ratings.map((item, index) => (
-                                <div key={index} className={styles.prevComment}>
-                                    <div className={styles.close}>
-                                        <span style={{ fontWeight: 'bold', marginLeft: '16px' }}>
-                                            <span className={styles.commentUser}> {item.username ? item.username : 'Phan Dang Minh'} </span>
-                                            {item.star}
-                                            <span className={styles.greenStar2}>&#9733;</span>
-                                        </span>
-                                        {
-                                            (item.user_id === userId) && (
-                                                <span className={styles.delete} onClick={() => handleOpenDelete(item.id)}>
-                                                    X
-                                                </span>
-                                            )
-                                        }
-                                    </div>
-                                    <span className={styles.review}
-                                    >
-                                        {item.review}
-                                    </span>
-                                </div>
-                            ))}{' '} */}
-                    </div>
+        <div className='main-session'>
+          <ToastContainer
+            position="top-left"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+      
+          {nanny && (
+            <div>
+              {isBooking && (
+                <div style={BookingModalStyle}>
+                  <BookingForm
+                    nanny={nanny}
+                    setIsBooking={setIsBooking}
+                    notify={notify}
+                  />
                 </div>
-            )}
+              )}
+      
+              <div className={styles.container1}>
+                <div className={styles.leftBox}>
+                  <label className={styles.labelName}>Name</label>
+                  <span className={styles.inputField}>
+                    <p className={styles.inputFieldText}>{nanny.full_name}</p>
+                  </span>
+      
+                  <label className={styles.labelName}>Gender</label>
+                  <ul>
+                    <li className={styles.font24}>
+                      <span className={styles.dot}></span>
+                      {nanny.gender === 'male' ? 'Male' : 'Female'}
+                    </li>
+                  </ul>
+      
+                  <label className={styles.labelName}>Birthday</label>
+                  <span className={styles.inputField}>
+                    <p className={styles.inputFieldText}>{nanny.birthday}</p>
+                  </span>
+      
+                  <label className={styles.labelName}>Address</label>
+                  <span className={styles.inputField}>
+                    <p className={styles.inputFieldText}>{nanny.address}</p>
+                  </span>
+      
+                  <label className={styles.labelName}>Experience</label>
+                  <span className={styles.inputField}>
+                    <p className={styles.inputFieldText}>{formatExperience(nanny.cook_exp)}</p>
+                  </span>
+                  <label className={styles.labelName}>Languages</label>
+                  <span className={styles.inputField}>
+                    <p className={styles.inputFieldText}>{nannyLanguagesString}</p>
+                  </span>
+                </div>
+      
+                <div className={styles.rightBox}>
+                  <div className={styles.imgDiv}>
+                    <img className={styles.staffImg} src={nanny.image_link} alt="" />
+                  </div>
+                  <div className={styles.starList}>
+                    <Rating
+                      style={{ color: '#0d520d' }}
+                      name="read-only"
+                      value={calculateAverageRating(nanny.ratings)}
+                      readOnly
+                      precision={0.1}
+                      sx={{ fontSize: '58px' }}
+                    />
+                  </div>
+                  <div className={styles.BookOrReport}>
+                    <Box className={styles.BookOrReportButton}>
+                      <BookingButton
+                        variant="contained"
+                        sx={{ marginRight: '100px', width: '200px', fontWeight: 600 }}
+                        onClick={() => {
+                          setIsBooking(true);
+                        }}
+                      >
+                        Booking
+                      </BookingButton>
+                      <FeedbackButton
+                        variant="contained"
+                        onClick={handleOpen}
+                        sx={{ width: '300px', fontWeight: 600 }}
+                      >
+                        Feedback
+                      </FeedbackButton>
+                    </Box>
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                      closeAfterTransition
+                      sx={{
+                        zIndex: 1000
+                      }}
+                    >
+                      {/* Modal Feedback */}
+                      <Box sx={style} borderRadius={5} border="1px solid">
+                        <Typography
+                          id="modal-modal-title"
+                          variant="h6"
+                          component="h2"
+                          fontWeight="bold"
+                          fontSize="28px"
+                        >
+                          Feedback
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }} fontWeight="bold">
+                          Stars
+                        </Typography>
+                        <Typography sx={{ marginLeft: 8 }}>
+                          <Rating
+                            sx={{ color: '#4d4dff' }}
+                            size="large"
+                            name="simple-controlled"
+                            value={value}
+                            onChange={(event, newValue) => {
+                              setValue(newValue);
+                            }}
+                          />
+                        </Typography>
+      
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                          <textarea
+                            style={{
+                              width: '90%',
+                              height: '100px',
+                              borderRadius: '20px',
+                              padding: '25px',
+                              marginLeft: '15px',
+                            }}
+                            aria-label="empty textarea"
+                            placeholder="Write comment"
+                            minRows={3}
+                            value={review}
+                            onChange={(e) => setReview(e.target.value)}
+                          />
+                        </Typography>
+      
+                        <Typography
+                          sx={{
+                            marginTop: '20px',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            display: 'flex',
+                          }}
+                        >
+                          <MyButton onClick={FeedBack} sx={{ marginRight: '25px' }}>
+                            OK
+                          </MyButton>
+                          <MyButton onClick={handleClose}>Cancel</MyButton>
+                        </Typography>
+                      </Box>
+                    </Modal>
+                  </div>
+                </div>
+              </div>
+      
+              <span className={styles.commentText}>Comments</span>
+              <div className={styles.container3}>
+                <Modal
+                  open={openDelete}
+                  onClose={handleCloseDelete}
+                  aria-labelledby="modal-modal-title1"
+                  aria-describedby="modal-modal-description1"
+                >
+                  {/* Modal delete */}
+                  <Box sx={styleDelete} borderRadius={5} border="1px solid">
+                    <Typography
+                      id="modal-modal-title1"
+                      variant="h6"
+                      component="h2"
+                      fontWeight="bold"
+                      fontSize="28px"
+                      textAlign={'center'}
+                    >
+                      Delete comment?
+                    </Typography>
+                    <Typography
+                      id="modal-modal-description"
+                      sx={{ mt: 2 }}
+                      fontWeight="semibold"
+                      textAlign={'center'}
+                    >
+                      Are you sure you want to delete this comment?
+                    </Typography>
+      
+                    <Typography
+                      sx={{
+                        marginTop: '20px',
+                        alignItems: 'center',
+                        display: 'flex',
+                        justifyContent: 'space-evenly',
+                      }}
+                    >
+                      <MyButton onClick={handleCloseDelete}>
+                        Cancel
+                      </MyButton>
+                      <MyButton onClick={handleDeleteCMT}>
+                        Delete
+                      </MyButton>
+                    </Typography>
+                  </Box>
+                </Modal>
+      
+                {currentComments.map((item, index) => (
+                  <div key={index} className={styles.prevComment}>
+                    <div className={styles.close}>
+                      <span style={{ fontWeight: 'bold', marginLeft: '16px' }}>
+                        <span className={styles.commentUser}> {item.username ? item.username : 'Phan Dang Minh'} </span>
+                        {item.star}
+                        <span className={styles.greenStar2}>&#9733;</span>
+                      </span>
+                      {(item.user_id === userId) && (
+                        <span className={styles.delete} onClick={() => handleOpenDelete(item.id)}>
+                          X
+                        </span>
+                      )}
+                    </div>
+                    <span className={styles.review}>
+                      {item.review}
+                    </span>
+                  </div>
+                ))}
+      
+      <Box display="flex" justifyContent="center" alignItems="center" marginTop={2}>
+                    {pageNumbers.map((number) => (
+                        <Button
+                            key={number}
+                            onClick={() => paginate(number)}
+                            variant={number === currentPage ? 'contained' : 'outlined'}
+                            color="primary"
+                            style={{ margin: '0 5px' }}
+                        >
+                            {number}
+                        </Button>
+                    ))}
+                </Box>
+              </div>
+            </div>
+          )}
         </div>
-    );
+      );
+      
 }
