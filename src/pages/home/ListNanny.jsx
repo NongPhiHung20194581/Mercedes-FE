@@ -124,7 +124,7 @@ export default function ListNanny() {
 
             const fetchData = async () => {
                 const reponse = await fetch(
-                    'https://babybuddies-be-dev.onrender.com/api/v1/home?fbclid=IwAR0YWt_3e9gKOT4E6uDFFe5aQl4lZ6GMheji7DLbuXTORu1V2j5x8JUrDQQ',
+                    'https://api.hustutor.dobuiquanganh.com/v1/home?fbclid=IwAR0YWt_3e9gKOT4E6uDFFe5aQl4lZ6GMheji7DLbuXTORu1V2j5x8JUrDQQ',
                 );
                 const reponseJSON = await reponse.json();
                 setNannys(reponseJSON.result.staffs);
@@ -169,7 +169,7 @@ export default function ListNanny() {
             delete formData.careExp;
         }
 
-        postData('https://babybuddies-be-dev.onrender.com/api/v1/search/matching', formData)
+        postData('https://api.hustutor.dobuiquanganh.com/v1/search/matching', formData)
             .then((data) => {
                 console.log(data);
                 setFilter(false);
@@ -208,7 +208,7 @@ export default function ListNanny() {
             delete formData.salary;
         }
 
-        postData('https://babybuddies-be-dev.onrender.com/api/v1/search/matching', formData)
+        postData('https://api.hustutor.dobuiquanganh.com/v1/search/matching', formData)
             .then((data) => {
                 console.log(data);
                 setFilter(false);

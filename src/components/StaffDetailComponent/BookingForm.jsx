@@ -64,7 +64,7 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
             userId: currentUser
         };
 
-        axios.post('https://babybuddies-be-dev.onrender.com/api/v1/bookings/store', formData)
+        axios.post('https://api.hustutor.dobuiquanganh.com/v1/bookings/store', formData)
             .then(() => {
                 setMessage('');
                 setIsBooking(false);

@@ -78,7 +78,7 @@ export default function DetailNanny() {
 
     const fetchData = async () => {
         const reponse = await fetch(
-            'https://babybuddies-be-dev.onrender.com/api/v1/staffs/' + id,
+            'https://api.hustutor.dobuiquanganh.com/v1/staffs/' + id,
         );
         const reponseJSON = await reponse.json();
         setNanny(reponseJSON.result);
@@ -213,7 +213,7 @@ export default function DetailNanny() {
     const handleDeleteCMT = () => {
         console.log("Now delete comment: ", currentSelectDeleteComment);
 
-        axios.delete(`https://babybuddies-be-dev.onrender.com/api/v1/ratings/${currentSelectDeleteComment}/delete`).then(() => {
+        axios.delete(`https://api.hustutor.dobuiquanganh.com/v1/ratings/${currentSelectDeleteComment}/delete`).then(() => {
             notify("コメントの削除に成功しました！");
             setOpenDelete(false);
 

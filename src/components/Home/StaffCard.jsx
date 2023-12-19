@@ -47,6 +47,9 @@ const StaffCard = ({ staff }) => {
 
     function getFirstName(fullName) {
         // Tách chuỗi thành mảng các từ
+        if (fullName === undefined) {
+            return '';
+        }
         var nameArray = fullName.split(' ');
 
         // Lấy phần tử cuối cùng trong mảng là tên
