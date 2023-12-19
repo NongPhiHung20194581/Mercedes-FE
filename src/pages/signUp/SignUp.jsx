@@ -41,7 +41,7 @@ export default function SignUp() {
     };
 
     React.useEffect(() => {
-        if(user.isLogin){
+        if (user.isLogin) {
             navigate("/")
         }
     }, [user, navigate])

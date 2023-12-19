@@ -9,13 +9,6 @@ export const links = [
         className: 'nav-link-login button-48'
     },
     {
-        name: 'Sign up',
-        title: 'register',
-        path: ROUTE.SIGNUP,
-        isLogin: false,
-        className: 'nav-link-signup button-48'
-    },
-    {
         name: 'Profile',
         title: 'profile',
         path: ROUTE.PROFILE,
@@ -31,13 +24,6 @@ export const link1 = [
         path: ROUTE.LOGIN,
         isLogin: false,
         className: 'nav-link-login button-48'
-    },
-    {
-        name: 'Sign up',
-        title: 'register',
-        path: ROUTE.SIGNUP,
-        isLogin: false,
-        className: 'nav-link-signup button-48'
     }
 ]
 
