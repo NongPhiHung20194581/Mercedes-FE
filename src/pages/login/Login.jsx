@@ -31,58 +31,54 @@ export default function Login() {
     const [userIdError, setUserIdError] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {isLogin} = useSelector(authSelector);
-    const [userId, setUserId] = useState('');
-    const accountIds = [
-        '647b77348af6c322511fed58',
-        '647b77348af6c322511fed59',
-        '647b77348af6c322511fed5a',
-        '647b77348af6c322511fed5b',
-        '647b77348af6c322511fed5c',
-        '647b77348af6c322511fed5d',
-        '647b77348af6c322511fed5e',
-        '647b77348af6c322511fed5f',
-        '647b77348af6c322511fed60',
-        '647b77348af6c322511fed61',
-        '647b77348af6c322511fed62',
-        '647b77348af6c322511fed63',
-        '647b77348af6c322511fed64',
-        '647b77348af6c322511fed65',
-        '647b77348af6c322511fed66',
-        '647b77348af6c322511fed67',
-        '647b77348af6c322511fed68',
-        '647b77348af6c322511fed69',
-        '647b77348af6c322511fed6a',
-        '647b77348af6c322511fed6b',
-    ];
+    const { isLogin } = useSelector(authSelector);
+    const [email, setEmail] = useState('');
 
-    const handleChangeUserId = (event) => {
+    const handleChangeEmail = (event) => {
         setUserIdError(false);
-        if(event.target){
-            const {value} = event.target;
-            setUserId(value)
+        if (event.target) {
+            const { value } = event.target;
+            setEmail(value);
         }
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const id = accountIds[1];
 
-        loginUser(id)
+        let loginPromise;
+        let redirectPath;
+
+        if (email === 'admin@hust.edu.vn') {
+            loginPromise = loginUser('647b77348af6c322511fed6c');
+            redirectPath = "/hired";
+        } else if (email === 'lythanhnhi@soict.hust.edu.vn') {
+            loginPromise = loginUser('647b77348af6c322511fed78');
+            redirectPath = "/profile";
+        } else if (email === 'ngoclinh@sis.hust.edu.vn') {
+            loginPromise = loginUser('647b77348af6c322511fed5d');
+            redirectPath = "/profile";
+        } else if (email === 'hoangphuong@sis.hust.edu.vn') {
+            loginPromise = loginUser('647b77348af6c322511fed5e');
+            redirectPath = "/profile";
+        } else {
+            // Trường hợp khác, có thể xử lý theo nhu cầu của bạn
+            // ...
+        }
+
+        loginPromise
             .then(res => {
-                console.log(res.data.result)
                 const { id, account_status, user_info, username } = res.data.result;
-                dispatch(saveUserInfo({ id, account_status, username, fullName: user_info.name }))
-                navigate(`/profile`);
+                dispatch(saveUserInfo({ id, account_status, username, fullName: user_info.name }));
+                navigate(redirectPath);
             })
             .catch(err => {
                 setUserIdError(true);
-            })
+            });
     };
 
     React.useEffect(() => {
         if (isLogin) {
-            navigate("/")
+            // navigate("/")
         }
     }, [isLogin, navigate])
 
@@ -110,13 +106,13 @@ export default function Login() {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="userId"
-                                label="Enter userId"
-                                name="userId"
-                                autoComplete="userId"
+                                id="email"
+                                label="Enter email"
+                                name="email"
+                                autoComplete="email"
                                 autoFocus
-                                value={userId}
-                                onChange={handleChangeUserId}
+                                value={email}
+                                onChange={handleChangeEmail}
                             />
 
                             <FormControlLabel
