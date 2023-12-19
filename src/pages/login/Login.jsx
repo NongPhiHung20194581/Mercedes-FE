@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { saveUserInfo } from '../../redux/slices/auth.slice';
 import { useNavigate } from 'react-router-dom';
 import { authSelector } from '../../redux/selector';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -27,8 +29,20 @@ const MyAppBar = styled(Button)({
 });
 const defaultTheme = createTheme();
 
+const notify_failed = (message) => toast.error(message, {
+    position: "bottom-right",
+    autoClose: 4000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+});;
+
 export default function Login() {
     const [userIdError, setUserIdError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { isLogin } = useSelector(authSelector);
@@ -61,19 +75,23 @@ export default function Login() {
             loginPromise = loginUser('647b77348af6c322511fed5e');
             redirectPath = "/profile";
         } else {
-            // Trường hợp khác, có thể xử lý theo nhu cầu của bạn
-            // ...
+            setEmailError(true);
         }
 
-        loginPromise
-            .then(res => {
-                const { id, account_status, user_info, username } = res.data.result;
-                dispatch(saveUserInfo({ id, account_status, username, fullName: user_info.name }));
-                navigate(redirectPath);
-            })
-            .catch(err => {
-                setUserIdError(true);
-            });
+        if (loginPromise) {
+            loginPromise
+                .then(res => {
+                    const { id, account_status, user_info, username } = res.data.result;
+                    dispatch(saveUserInfo({ id, account_status, username, fullName: user_info.name }));
+                    navigate(redirectPath);
+                })
+                .catch(err => {
+                    setUserIdError(true);
+                    setEmailError(true);
+                });
+        } else {
+            notify_failed('Invalid email!');
+        }
     };
 
     React.useEffect(() => {
@@ -84,6 +102,18 @@ export default function Login() {
 
     return (
         <ThemeProvider theme={defaultTheme}>
+            <ToastContainer
+                position="top-left"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
             <Grid container component="main" sx={{ height: 'calc(100vh - 72px)', marginTop: "72px" }}>
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                     <Box
