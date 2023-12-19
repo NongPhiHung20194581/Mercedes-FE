@@ -18,9 +18,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { saveUserInfo } from '../../redux/slices/auth.slice';
 import { useNavigate } from 'react-router-dom';
 import { authSelector } from '../../redux/selector';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import Divider from '@mui/material/Divider';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const MyAppBar = styled(Button)({
@@ -28,7 +36,6 @@ const MyAppBar = styled(Button)({
     color: 'white',
 });
 const defaultTheme = createTheme();
-
 const notify_failed = (message) => toast.error(message, {
     position: "bottom-right",
     autoClose: 4000,
@@ -39,14 +46,15 @@ const notify_failed = (message) => toast.error(message, {
     progress: undefined,
     theme: "light",
 });;
-
 export default function Login() {
     const [userIdError, setUserIdError] = useState(false);
     const [emailError, setEmailError] = useState(false);
+    const [role, setRole] = useState('admin');
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { isLogin } = useSelector(authSelector);
     const [email, setEmail] = useState('');
+    const [open, setOpen] = useState(true);
 
     const handleChangeEmail = (event) => {
         setUserIdError(false);
@@ -55,6 +63,14 @@ export default function Login() {
             setEmail(value);
         }
     }
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleRoleChange = (event) => {
+        setRole(event.target.value);
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -114,67 +130,67 @@ export default function Login() {
                 pauseOnHover
                 theme="light"
             />
-            <Grid container component="main" sx={{ height: 'calc(100vh - 72px)', marginTop: "72px" }}>
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <Grid container component="main" sx={{ height: '100vh' }}>
+                <Grid item xs={12} sm={8} md={12} component={Paper} elevation={6} square sx={{ height: '100%', flex: 1, width: '100%' }}>
                     <Box
                         sx={{
-                            my: 8,
-                            mx: 4,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
+                            backgroundImage: `url('https://storage.googleapis.com/hust-files/2021-11-15/5807675312963584/background-new-page_.9m.jpeg')`,
+                            backgroundRepeat: 'no-repeat',
+                            backgroundSize: 'cover',
+                            height: '100%',
+                            width: '100%',
+                            position: 'absolute',
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
-                        <Typography component="h1" variant="h5" color={userIdError ? 'red' : '#1d9a1d'}>
-                            {userIdError ? 'Invalid User' : 'Log In'}
-                        </Typography>
-                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Enter email"
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
-                                value={email}
-                                onChange={handleChangeEmail}
-                            />
 
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
-                            />
+                        {/* Popup */}
+                        <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
+                            <Box sx={{ backgroundColor: '#9b0504', color: 'white' }}>
+                                <DialogTitle>
+                                    <Typography variant="h5">Login</Typography>
+                                    <Divider sx={{ marginTop: 1, backgroundColor: 'white' }} />
+                                </DialogTitle>
+                                <DialogContent>
+                                    <Typography variant="h7" align="center" sx={{ color: 'white', marginBottom: 2 }}>
+                                        Đăng nhập bằng tài khoản Office365 (email trường)
+                                    </Typography>
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        id="email"
+                                        label="Enter email"
+                                        name="email"
+                                        autoComplete="email"
+                                        autoFocus
+                                        value={email}
+                                        onChange={handleChangeEmail}
+                                        InputLabelProps={{ style: { color: 'white' } }}
+                                    />
 
-                            <MyAppBar
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2, textTransform: 'none', ':hover': { backgroundColor: '#106510' } }}
-                            >
-                                Log In
-                            </MyAppBar>
-                        </Box>
+                                    <FormControl component="fieldset" sx={{ mt: 2 }}>
+                                        <FormLabel component="legend">Choose role:</FormLabel>
+                                        <RadioGroup row aria-label="role" name="row-radio-buttons-group" value={role} onChange={handleRoleChange}>
+                                            <FormControlLabel value="admin" control={<Radio />} label="Admin" />
+                                            <FormControlLabel value="teacher" control={<Radio />} label="Teacher" />
+                                            <FormControlLabel value="tutor" control={<Radio />} label="Tutor" />
+                                            <FormControlLabel value="student" control={<Radio />} label="Student" />
+                                        </RadioGroup>
+                                    </FormControl>
+                                </DialogContent>
+                                <DialogActions sx={{ justifyContent: 'center' }}>
+                                    <Button onClick={handleClose} color="primary">
+                                        Cancel
+                                    </Button>
+                                    {/* Thay đổi thành nút đăng nhập trong popup */}
+                                    <MyAppBar type="submit" onClick={handleSubmit} variant="contained" sx={{ textTransform: 'none', ':hover': { backgroundColor: '#106510' } }}>
+                                        Log In
+                                    </MyAppBar>
+                                </DialogActions>
+                            </Box>
+                        </Dialog>
                     </Box>
                 </Grid>
-                <CssBaseline />
-                <Grid
-                    item
-                    xs={false}
-                    sm={4}
-                    md={7}
-                    sx={{
-                        backgroundImage: 'url(https://img.freepik.com/premium-vector/babysitter-nanny-services-care-baby-needs-play-with-children-flat-illustration_2175-8229.jpg?w=1380)',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                    }}
-                />
             </Grid>
         </ThemeProvider>
     );
