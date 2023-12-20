@@ -33,7 +33,7 @@ const Header = () => {
             </Link>
             </>
             }
-            <h1 className='app-header-name'>Đại học bách khoa Hà Nội <br/>Hệ thống quản trị đại học trực tuyến -Trường công nghê thông tin và truyền thông.</h1>
+            <h1 className='app-header-name'>Đại học bách khoa Hà Nội <br/>Hệ thống quản trị đại học trực tuyến </h1>
             
             <div className="nav-links" >
                 {isLogin ?
