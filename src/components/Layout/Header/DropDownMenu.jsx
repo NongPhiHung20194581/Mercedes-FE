@@ -18,11 +18,11 @@ const DropDownMenu = ({ height, setHeight }) => {
             <Link className='dropdown-menu__item'
                 to={ROUTE.PROFILE}
                 onClick={setHeight}
-            >プロファイル</Link>
+            >Profile</Link>
             <Link className='dropdown-menu__item'
-                to={ROUTE.HIRED}
-                onClick={setHeight}
-            >予約管理</Link>
+            // to={ROUTE.HIRED}
+            // onClick={setHeight}
+            >Manage bookings</Link>
             <div className='dropdown-menu__item'
                 onClick={() => {
                     dispatch(logout());
@@ -30,7 +30,7 @@ const DropDownMenu = ({ height, setHeight }) => {
                     setHeight();
                     navigate("/")
                 }}
-            >ログアウト</div>
+            >Log out</div>
         </AnimateHeight>
     )
 }
