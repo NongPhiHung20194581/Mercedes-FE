@@ -6,5 +6,6 @@ export const ROUTE = {
     LOGOUT: '/logout',
     NANNY_DETAIL: '/details/:id',
     PROFILE: '/profile',
-    HIRED: '/hired'
+    HIRED: '/hired',
+    HUST: '/hust'
 }

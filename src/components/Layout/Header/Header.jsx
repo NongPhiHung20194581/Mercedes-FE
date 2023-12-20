@@ -17,13 +17,24 @@ const Header = () => {
     }
 
     return (
-        <div className='app-header'>
+        <div className='app-header' >
+            {isLogin?<>
             
             <Link className="app-logo" to={ROUTE.HOME} >
-                <img src={require("../../../assets/img/logo1.png")} alt="" />
+                <img className='app-logo-img' src={require("../../../assets/img/logo1.png")} alt="" />
                 
             </Link>
-            <h1 style={{color:'white'}}>Hệ thống quản trị đại học trực tuyến. <br/>Đại học bách khoa Hà Nội</h1>
+            </>
+            :
+            <>
+            <Link className="app-logo" to={ROUTE.HUST} >
+                <img className='app-logo-img' src={require("../../../assets/img/logo1.png")} alt="" />
+                
+            </Link>
+            </>
+            }
+            <h1 className='app-header-name'>Đại học bách khoa Hà Nội <br/>Hệ thống quản trị đại học trực tuyến -Trường công nghê thông tin và truyền thông.</h1>
+            
             <div className="nav-links" >
                 {isLogin ?
                     <>{link2.map(link => (

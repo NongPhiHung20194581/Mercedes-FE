@@ -28,6 +28,7 @@ export default function HeaderRegister() {
                             href="/login"
                             variant="contained"
                             color="success"
+                            
                             sx={{ marginRight: 5, paddingLeft: 5, paddingRight: 5, textTransform: 'none' }}
                         >
                             Login
