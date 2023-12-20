@@ -2,7 +2,7 @@
     position: relative;
     border-radius: 20px;
     overflow: hidden;
-    border: 1px solid #007320;
+    border: 1px solid #9C2C30;
     background: #f8f8f8;
     width: 315px;
     height: fit-content;
@@ -70,7 +70,7 @@
                 align-items: flex-start;
 
                 svg {
-                    font-size: 0.5em;
+                    font-size: 1em;
                 }
             }
         }
@@ -105,6 +105,7 @@
             .staff-card__language__icon {
                 border-radius: 0;
                 object-fit: contain;
+                color: #9C2C30;
             }
         }
     }

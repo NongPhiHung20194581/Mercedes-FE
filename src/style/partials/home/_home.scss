@@ -13,7 +13,7 @@
             height: 70px;
 
             .list-staffs__title {
-                color: #007320;
+                color: #9C2C30;
                 padding-left: 20px;
                 font-size: 48px;
                 font-style: normal;
@@ -57,37 +57,31 @@
         z-index: 1000;
         top: 72px;
         right: 0;
-        min-width: 680px;
+        min-width: 580px;
         height: calc(100vh - 72px);
-        background-color: #fff;
+        background-color: var(--secondary-color);
         animation: showFilter 0.3s forwards;
-        padding: 20px;
+        padding: 10px;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-
+        background-color: rgba(130, 6, 6, 0.6);
+        backdrop-filter: blur(0.5px);
         .filter-item {
-            .filter-language__btn--active {
-                background-color: #a744be;
-                color: #fff
+            .filter__btn--active {
+                width: 13px;
+                height: 13px;
+                background-color: #8e3540;
+                color: #fff;
+                display: inline-block;
+                border: 2px solid #fff;
+                cursor: pointer;
             }
-
-            .filter-childcare--active {
-                background-color: #1976d2;
-                color: #fff
-            }
-
-            .filter-cookings__btn--active {
-                background-color: #ff6624;
-                color: #fff
-            }
-
-            .filter-prices__btn--active {
-                background-color: #b70f0a;
-                color: #fff
-            }
-
-            .filter-rating__btn--active {
-                background-color: #0ab718;
-                color: #fff
+            .filter__btn--deactive {
+                width: 13px;
+                height: 13px;
+                background-color: white;
+                color: #fff;
+                display: inline-block;
+                cursor: pointer;
             }
         }
     }

@@ -17,8 +17,8 @@ const HomeContainer = () => {
 
     // states for filter component
     const [languages, setLanguages] = useState(language);
-    const [cookings, setCookings] = useState(cooking);
-    const [childCares, setChildCares] = useState(childCare);
+    const [cookings, setCookings] = useState(cooking.slice(0, -1));
+    const [childCares, setChildCares] = useState(childCare.slice(0, -1));
     const [prices, setPrices] = useState(price);
     const [ratings, setRatings] = useState(rating);
 

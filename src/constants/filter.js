@@ -1,26 +1,26 @@
 import { CHINESE, ENGLISH, FRENCH, JAPANESE, SPANISH, VIETNAMESE } from "./profile";
 
 export const language = [
-    { name: 'ベトナム語', value: VIETNAMESE, active: false },
-    { name: '英語', value: ENGLISH, active: false },
-    { name: '日本語', value: JAPANESE, active: false },
-    { name: 'フランス語', value: FRENCH, active: false },
-    { name: 'スペイン語', value: SPANISH, active: false },
-    { name: '中国語', value: CHINESE, active: false },
+    { name: 'Vietnamese', value: VIETNAMESE, active: false },
+    { name: 'English', value: ENGLISH, active: false },
+    { name: 'Japanese', value: JAPANESE, active: false },
+    { name: 'French', value: FRENCH, active: false },
+    { name: 'Spanish', value: SPANISH, active: false },
+    { name: 'Chinese', value: CHINESE, active: false },
 ];
 
 export const cooking = [
-    { name: '1 年', value: '1 year', active: false },
-    { name: '2 年', value: '2 years', active: false },
-    { name: '3 年', value: '3 years', active: false },
-    { name: '3 年+', value: '> 3 years', active: false },
+    { name: 'Newbie', value: '1 year', active: false },
+    { name: 'Moderate', value: '2 years', active: false },
+    { name: 'Years of Experience', value: '3 years', active: false },
+    { name: 'Years of Experience', value: '> 3 years', active: false },
 ];
 
 export const childCare = [
-    { name: '1 年', value: '1 year', active: false },
-    { name: '2 年', value: '2 years', active: false },
-    { name: '3 年', value: '3 years', active: false },
-    { name: '3 年+', value: '> 3 years', active: false },
+    { name: 'Newbie', value: '1 year', active: false },
+    { name: 'Moderate', value: '2 years', active: false },
+    { name: 'Years of Experience', value: '3 years', active: false },
+    { name: 'Years of Experience', value: '> 3 years', active: false },
 ];
 
 export const price = [

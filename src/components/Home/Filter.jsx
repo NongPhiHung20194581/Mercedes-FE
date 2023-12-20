@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import TranslateIcon from '@mui/icons-material/Translate';
-import OutdoorGrillIcon from '@mui/icons-material/OutdoorGrill';
-import ChildFriendlyIcon from '@mui/icons-material/ChildFriendly';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import StarPurple500Icon from '@mui/icons-material/StarPurple500';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import { matchingNannyApi } from '../../api/home.api';
+import PropTypes from 'prop-types';
+import Slider, { SliderThumb } from '@mui/material/Slider';
+import { styled } from '@mui/material/styles';
+
+
 
 
 const NannyFilter = ({
@@ -17,11 +17,70 @@ const NannyFilter = ({
   setIsFilter,
   languages, setLanguages,
   cookings, setCookings,
-  childCares, setChildCares,
   prices, setPrices,
   ratings, setRatings,
   handleCancelFilter
 }) => {
+  const marks = [
+    {
+      value: 100000,
+      label: '100000',
+    },
+    {
+      value: 2000000,
+      label: '2000000',
+    },
+  ];
+  const [address, setAddress] = useState([
+    { name: 'Đống Đa', active: false },
+    { name: 'Hai Bà Trưng', active: false },
+    { name: 'Cầu Giấy', active: false },
+    { name: 'Tây Hồ', active: false },
+    { name: 'Thanh Xuân', active: false },
+  ]);
+  function AirbnbThumbComponent(props) {
+    const { children, ...other } = props;
+    return (
+      <SliderThumb {...other}>
+        {children}
+      </SliderThumb>
+    );
+  }
+  const AirbnbSlider = styled(Slider)(({ theme }) => ({
+    color: '#d8d8d8',
+    height: 3,
+    padding: '13px 0',
+    '& .MuiSlider-thumb': {
+      height: 10,
+      width: 10,
+      backgroundColor: 'var(--primary-color)',
+      border: '1px solid currentColor',
+      '&:hover': {
+        boxShadow: '0 0 0 8px rgba(58, 133, 137, 0.16)',
+      },
+    },
+    '& .MuiSlider-track': {
+      height: 3,
+    },
+    '& .MuiSlider-rail': {
+      color: theme.palette.mode === 'dark' ? 'var(--primary-color)' : '#d8d8d8',
+      opacity: theme.palette.mode === 'dark' ? undefined : 1,
+      height: 3,
+    },
+    '& .MuiSlider-valueLabel': {
+      fontSize: 12,
+      fontWeight: 'normal',
+      top: -6,
+      backgroundColor: 'unset',
+      color: '#fff',
+    },
+    "& .MuiSlider-markLabel": {
+      color: '#fff',  
+    }
+  }));
+  AirbnbThumbComponent.propTypes = {
+    children: PropTypes.node,
+  };
 
   const getActiveNames = (array) => {
     return array.filter((item) => item.active === true).map((item) => item.value);
@@ -30,13 +89,11 @@ const NannyFilter = ({
   const handleSubmitFilter = () => {
     const languageF = getActiveNames(languages);
     const cookingF = getActiveNames(cookings);
-    const childCareF = getActiveNames(childCares);
     const priceF = getActiveNames(prices);
     let formData = {
       // rating: rating,
       userLanguage: languageF.length === 1 ? languageF[0] : languageF,
       cookExp: cookingF.length === 1 ? cookingF[0] : cookingF,
-      careExp: childCareF.length === 1 ? childCareF[0] : childCareF,
       salary: priceF.length === 1 ? priceF[0] : priceF,
     };
 
@@ -46,10 +103,6 @@ const NannyFilter = ({
 
     if (cookingF.length === 0) {
       delete formData.cookExp;
-    }
-
-    if (childCareF.length === 0) {
-      delete formData.careExp;
     }
 
     if (priceF.length === 0) {
@@ -70,73 +123,44 @@ const NannyFilter = ({
   };
 
   return (
-    <Typography
-      component="div"
-      sx={{
-        zIndex: '1000',
-        // border: '1px solid #a4a4a4',
-        // borderRadius: '20px',
-        height: '100%',
-        width: '100%',
-      }}
-    >
-      <Box
-        // paddingBottom={'50px'} paddingLeft={'20px'}
-        sx={{
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between'
-        }}
-      >
+      <Box className = 'newfilback'>
         <Typography
           component="h3"
           sx={{
             fontSize: '30px',
-            color: 'black',
+            color: 'white',
             fontWeight: '700',
-            marginLeft: '24px',
-            marginTop: '14px',
-            marginBottom: '8px',
-            userSelect: 'none',
+            marginLeft: '5%',
+            userSelect: 'none'
           }}
         >
-          Interests
+          Filter
         </Typography>
 
         <Typography component="div"
           className='filter-item'
         >
+
           <Button
             size="small"
             sx={{
-              width: '136px',
+              width: 'auto',
               borderRadius: '16px',
-              backgroundColor: '#ebebeb',
-              color: '#a744be',
-              marginLeft: '14px',
-              pointerEvents: "none"
+              color: 'white',
+              marginLeft: '5%',
+              pointerEvents: "none",
+              fontSize: '20px',
+              fontWeight: '700',
             }}
-            startIcon={<TranslateIcon sx={{ color: '#a744be' }} />}
           >
-            言語
+            Language
           </Button>
-          <Box margin={'10px'} display={'flex'} width={'100%'} flexWrap={'wrap'}>
+          <Box marginLeft={'2%'} display={'flex'} flexDirection={'column'} width={'100%'} flexWrap={'wrap'} fontSize={'18px'}>
             {languages.map((item, key) => {
               return (
-                <Button
-                  className={item.active ? 'filter-language__btn--active' : ''}
-                  variant="outlined"
-                  size="small"
-                  key={key}
-                  sx={{
-                    borderRadius: '16px',
-                    color: 'black',
-                    width: 'auto',
-                    padding: '0.5em 1em',
-                    margin: '6px 10px',
-                    textTransform: 'none',
-                  }}
+                <div style={{ paddingLeft: '4%'}}>
+                <div
+                  className={item.active ? 'filter__btn--active' : 'filter__btn--deactive'}
                   onClick={() => {
                     setLanguages((prevItems) =>
                       prevItems.map((item, index) =>
@@ -145,183 +169,37 @@ const NannyFilter = ({
                     );
                   }}
                 >
-                  {item?.name}
-                </Button>
+                </div>
+                <span style={{ color: 'white', margin:' 10px', position:'relative', bottom: '2px' }}>{item?.name}</span>
+                </div>
               );
             })}
           </Box>
         </Typography>
-
         <Typography component="div"
           className='filter-item'
         >
           <Button
-            size="small"
-            sx={{
-              width: '136px',
-              borderRadius: '16px',
-              backgroundColor: '#ebebeb',
-              color: '#ff6624',
-              marginLeft: '14px',
-              pointerEvents: "none"
-            }}
-            startIcon={<OutdoorGrillIcon sx={{ color: '#ff6624' }} />}
+          size="small"
+          sx={{
+            width: 'auto',
+            borderRadius: '16px',
+            color: 'white',
+            marginLeft: '4%',
+            pointerEvents: "none",
+            fontSize: '20px',
+            fontWeight: '700',
+          }}
+            
           >
-            料理
+            Rating
           </Button>
-          <Box margin={'10px'} display={'flex'} flexWrap={'wrap'}>
-            {cookings.map((item, key) => {
-              return (
-                <Button
-                  className={item.active ? 'filter-cookings__btn--active' : ''}
-                  variant="outlined"
-                  size="small"
-                  key={key}
-                  sx={{
-                    borderRadius: '16px',
-                    color: 'red',
-                    width: 'auto',
-                    padding: '0.5em 1em',
-                    margin: '6px 10px',
-                    textTransform: 'none',
-                  }}
-                  onClick={() => {
-                    setCookings((prevItems) =>
-                      prevItems.map((item, index) => ({
-                        ...item,
-                        active: index === key ? true : false,
-                      })),
-                    );
-                  }}
-                >
-                  {item?.name}
-                </Button>
-              );
-            })}
-          </Box>
-        </Typography>
-
-        <Typography component="div"
-          className='filter-item'
-        >
-          <Button
-            size="small"
-            sx={{
-              width: '136px',
-              borderRadius: '16px',
-              backgroundColor: '#ebebeb',
-              color: 'primary.main',
-              marginLeft: '14px',
-              pointerEvents: "none"
-            }}
-            startIcon={<ChildFriendlyIcon sx={{ color: 'primary.main' }} />}
-          >
-            世話
-          </Button>
-          <Box margin={'10px'} display={'flex'} flexWrap={'wrap'}>
-            {childCares.map((item, key) => {
-              return (
-                <Button
-                  className={item.active ? 'filter-childcare--active' : ''}
-                  variant="outlined"
-                  key={key}
-                  size="small"
-                  sx={{
-                    borderRadius: '16px',
-                    color: 'black',
-                    width: 'auto',
-                    padding: '0.5em 1em',
-                    margin: '6px 10px',
-                    textTransform: 'none',
-                  }}
-                  onClick={() => {
-                    setChildCares((prevItems) =>
-                      prevItems.map((item, index) => ({
-                        ...item,
-                        active: index === key ? true : false,
-                      })),
-                    );
-                  }}
-                >
-                  {item?.name}
-                </Button>
-              );
-            })}
-          </Box>
-        </Typography>
-
-        <Typography component="div"
-          className='filter-item'
-        >
-          <Button
-            size="small"
-            sx={{
-              width: '136px',
-              borderRadius: '16px',
-              backgroundColor: '#ebebeb',
-              color: '#b70f0a',
-              marginLeft: '14px',
-              pointerEvents: "none"
-            }}
-            startIcon={<AttachMoneyIcon sx={{ color: '#b70f0a' }} />}
-          >
-            価格
-          </Button>
-          <Box margin={'10px'} display={'flex'} flexWrap={'wrap'}>
-            {prices.map((item, key) => {
-              return (
-                <Button
-                  className={item.active ? 'filter-prices__btn--active' : ''}
-                  variant="outlined"
-                  key={key}
-                  size="small"
-                  sx={{
-                    borderRadius: '16px',
-                    color: 'black',
-                    width: 'auto',
-                    padding: '0.75em 1em',
-                    margin: '6px 10px',
-                    fontSize: '12px',
-                  }}
-
-                  onClick={() => {
-                    setPrices((prevItems) =>
-                      prevItems.map((item, index) => ({
-                        ...item,
-                        active: index === key ? true : false,
-                      })),
-                    );
-                  }}
-                >
-                  {item?.name}
-                </Button>
-              );
-            })}
-          </Box>
-        </Typography>
-
-        <Typography component="div"
-          className='filter-item'
-        >
-          <Button
-            size="small"
-            sx={{
-              width: '136px',
-              borderRadius: '16px',
-              backgroundColor: '#ebebeb',
-              color: '#0ab718',
-              marginLeft: '14px',
-              pointerEvents: "none"
-            }}
-            startIcon={<StarPurple500Icon sx={{ color: '#0ab718' }} />}
-          >
-            評価
-          </Button>
-          <Box margin={'10px'} display={'flex'} flexWrap={'wrap'}>
+          <Box marginLeft={'2%'} display={'flex'} flexDirection={'column'} width={'100%'} flexWrap={'wrap'} fontSize={'18px'}>
             {ratings.map((item, key) => {
               return (
-                <Button
-                  className={item.active ? 'filter-rating__btn--active' : ''}
+                <div style={{ paddingLeft: '4%'}}>
+                <div
+                  className={item.active ? 'filter__btn--active' : 'filter__btn--deactive'}
                   variant="outlined"
                   key={key}
                   size="small"
@@ -343,14 +221,151 @@ const NannyFilter = ({
                     );
                   }}
                 >
-                  {item?.name}
-                </Button>
+                </div>
+                <span style={{ color: 'white', margin:' 10px', position:'relative', bottom: '2px' }}>{item?.name}</span>
+                </div>
               );
             })}
           </Box>
         </Typography>
+        
+        <Typography component="div"
+          className='filter-item'
+        >
 
-        <Typography component="div" sx={{ float: 'right', marginRight: '14px' }}>
+        </Typography>
+        <Typography component="div"
+          className='filter-item'
+        >
+          <Button
+          size="small"
+          sx={{
+            width: 'auto',
+            borderRadius: '16px',
+            color: 'white',
+            marginLeft: '5%',
+            pointerEvents: "none",
+            fontSize: '20px',
+            fontWeight: '700',
+          }}
+          >
+            Experience
+          </Button>
+          <Box marginLeft={'2%'} display={'flex'} flexDirection={'column'} width={'100%'} flexWrap={'wrap'} fontSize={'18px'}>
+            {cookings.map((item, key) => {
+              return (
+                <div style={{ paddingLeft: '4%'}}>
+                <div
+                  className={item.active ? 'filter__btn--active' : 'filter__btn--deactive'}
+                  variant="outlined"
+                  size="small"
+                  key={key}
+                  sx={{
+                    borderRadius: '16px',
+                    color: 'black',
+                    width: 'auto',
+                    padding: '0.5em 1em',
+                    margin: '6px 10px',
+                    textTransform: 'none',
+                  }}
+                  onClick={() => {
+                    setCookings((prevItems) =>
+                      prevItems.map((item, index) => ({
+                        ...item,
+                        active: index === key ? true : false,
+                      })),
+                    );
+                  }}
+                >
+                </div>
+                <span style={{ color: 'white', margin:' 10px', position:'relative', bottom: '2px'}}>{item?.name}</span>
+                </div>
+              );
+            })}
+          </Box>
+        </Typography>
+        
+
+        {/* <Typography component="div"
+          className='filter-item'
+        >
+        <Button
+          size="small"
+          sx={{
+            width: 'auto',
+            borderRadius: '16px',
+            color: 'white',
+            marginLeft: '5%',
+            pointerEvents: "none",
+            fontSize: '10px',
+            fontWeight: '700',
+          }}
+          >
+            Address
+          </Button>
+        <Box marginLeft={'2%'} display={'flex'} flexDirection={'column'} width={'100%'} flexWrap={'wrap'} fontSize={'10px'}>
+            {address.map((item, key) => {
+              return (
+                <div style={{ paddingLeft: '4%'}}>
+                <div
+                  className={item.active ? 'filter__btn--active' : 'filter__btn--deactive'}
+                  variant="outlined"
+                  size="small"
+                  key={key}
+                  sx={{
+                    borderRadius: '16px',
+                    color: 'black',
+                    width: 'auto',
+                    padding: '0.5em 1em',
+                    margin: '6px 10px',
+                    textTransform: 'none',
+                  }}
+                  onClick={() => {
+                    setAddress((prevItems) =>
+                      prevItems.map((item, index) => ({
+                        ...item,
+                        active: index === key ? true : false,
+                      })),
+                    );
+                  }}
+                >
+                </div>
+                <span style={{ color: 'white', margin:' 10px', position:'relative', bottom: '2px'}}>{item?.name}</span>
+                </div>
+              );
+            })}
+          </Box>
+          <Button
+          size="small"
+          sx={{
+            width: 'auto',
+            borderRadius: '16px',
+            color: 'white',
+            marginLeft: '4%',
+            pointerEvents: "none",
+            fontSize: '10px',
+            fontWeight: '700',
+          }}
+          >
+            Price
+          </Button>
+          <Box sx={{ width: 400 , margin:'10px 15%', position:'relative', top:'6%'}}>
+            <AirbnbSlider
+              slots={{ thumb: AirbnbThumbComponent }}
+              getAriaLabel={(index) => (index === 0 ? 'Minimum price' : 'Maximum price')}
+              defaultValue={[300000, 1500000]}
+              valueLabelDisplay='on'
+              marks={marks}
+              min={100000}
+              max={2000000}
+            />
+          </Box>
+        </Typography> */}
+
+        
+
+        <Typography component="div" sx={{ float: 'right', margin: '0px 30%',display: 'flex',
+         justifyContent: 'space-between 100px' }}>
           <Button
             type='button'
             variant="contained"
@@ -359,12 +374,15 @@ const NannyFilter = ({
               padding: '10px 30px',
               marginLeft: '20px',
               textTransform: 'none',
-              backgroundColor: 'var(--secondary-color)',
-              ':hover': { backgroundColor: 'var(--secondary-color)', opacity: 0.85 }
+              backgroundColor: '#1547AA',
+              fontWeight: '600',
+              height: '30px',
+              width:'150px',
+              ':hover': { backgroundColor: '#1547AA', opacity: 0.85 }
             }}
             onClick={handleSubmitFilter}
           >
-            マッチング
+            Apply
           </Button>
           <Button
             type='button'
@@ -375,18 +393,22 @@ const NannyFilter = ({
             sx={{
               borderRadius: '20px',
               padding: '10px 30px',
-              backgroundColor: '#929292',
+              backgroundColor: '#D1D1D1',
               border: 'none',
               ml: 4,
               textTransform: 'none',
-              ':hover': { backgroundColor: 'red' },
+              fontWeight: '600',
+              color: '#1547AA',
+              height: '30px',
+              width:'150px',
+              ':hover': { backgroundColor: '#D1D1D1' },
             }}
           >
-            キャンセル
+            Cancel
           </Button>
         </Typography>
       </Box>
-    </Typography>
+
   )
 }
 

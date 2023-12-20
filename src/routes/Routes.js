@@ -12,6 +12,9 @@ import PublicRoute from './PublicRoute';
 import NotFoundPage from '../pages/404/NotFoundPage';
 import ProfilePage from '../pages/profile/ProfilePage';
 
+import HustPage from '../pages/hust/Hust';
+import Hust from '../pages/hust/Hust';
+
 export const publicRoutes = [
     { path: ROUTE.LAYOUT, element: HomePage, layout: RegisterLayout },
     { path: ROUTE.LOGIN, element: Login, layout: RegisterLayout },
@@ -21,6 +24,7 @@ export const publicRoutes = [
     { path: ROUTE.NANNY_DETAIL, element: DetailNanny, layout: DefaultLayout },
     { path: ROUTE.PROFILE, element: ProfilePage, layout: DefaultLayout },
     { path: ROUTE.HIRED, element: Hired, layout: DefaultLayout },
+    {path: ROUTE.HUST,element:Hust,layout:DefaultLayout}
 ];
 
 export const routes = [
@@ -33,6 +37,7 @@ export const routes = [
             { path: ROUTE.LOGIN, element: <Login /> },
             { path: ROUTE.SIGNUP, element: <SignUp /> },
             { path: ROUTE.NANNY_DETAIL, element: <DetailNanny /> },
+            
         ]
     },
     {
@@ -48,7 +53,14 @@ export const routes = [
         path: "*",
         is404: true,
         element: <NotFoundPage />
+    },
+    {
+        path:"hust",
+        element:<Hust/>,
+        
     }
+
+
 ].map(route => {
 
     if (route.isPrivate) {

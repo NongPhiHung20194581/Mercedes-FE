@@ -28,7 +28,10 @@ const DropDownMenu = ({ height, setHeight }) => {
                     dispatch(logout());
                     dispatch(clearProfile());
                     setHeight();
-                    navigate("/")
+
+                    // navigate("/");
+                    navigate("/hust");
+                    
                 }}
             >ログアウト</div>
         </AnimateHeight>

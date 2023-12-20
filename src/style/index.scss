@@ -1,6 +1,6 @@
 :root {
-    --primary-color: #007320;
-    --secondary-color: #007320a6;
+    --primary-color: #9C2C30;
+    --secondary-color: #9C2C30;
     --third-color: #72c78a;
 }
 
@@ -13,6 +13,7 @@
 //home style
 @import url("./partials/home/_home.scss");
 @import url("./partials/home/_staff_card.scss");
+@import url("./partials/home/newfilter.scss");
 
 // global style
 @import url("./partials/paging/_paging.scss");

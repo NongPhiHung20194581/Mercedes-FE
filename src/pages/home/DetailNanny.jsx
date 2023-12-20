@@ -127,6 +127,20 @@ export default function DetailNanny() {
         return formattedNumber;
     }
 
+    function formatExperience(experience) {
+        if(!experience) return '';
+
+        if(experience === 'non') return 'Newbie';
+
+        if(experience.includes('>')) {
+            experience = experience.replace('>', '');
+        }
+
+        if(experience.includes('1')) return 'Newbie';
+        if(experience.includes('2')) return 'Moderate';
+        if(experience.includes('3')) return 'Years of Experience';
+    }
+
     function calculateAverageRating(reviews) {
         var totalStars = 0;
         var totalReviews = reviews.length;
@@ -319,7 +333,7 @@ export default function DetailNanny() {
                                 <li className={styles.font24}>
                                     <span className={styles.dot}></span>
 
-                                    {nanny.gender === 'male' ? '男' : '女'}
+                                    {nanny.gender === 'male' ? 'Male' : 'Female'}
                                 </li>
                             </ul>
 
@@ -333,62 +347,16 @@ export default function DetailNanny() {
                                 <p className={styles.inputFieldText}>{nanny.address}</p>
                             </span>
 
-                            <label className={styles.labelName}>
-                                Experience
-                                {/* <span
-                                    className={styles.modalStaffDetailItemIcon}
-                                    onClick={handleChangeCookingDetail}
-                                > */}
-                                    {/* <BsEyeFill /> */}
-                                {/* </span> */}
-                            </label>
-                            <CertificateModal
-                                isOpen={openCookingDetail}
-                                onCloseModal={handleChangeCookingDetail}
-                                renderData={nannyCookingCertificate()}
-                            />
+                            <label className={styles.labelName}>Experience</label>
                             <span className={styles.inputField}>
-                                <p className={styles.inputFieldText}>{nanny.cook_exp}</p>
+                                <p className={styles.inputFieldText}>{formatExperience(nanny.cook_exp)}</p>
                             </span>
-
-                            {/* <label className={styles.labelName}>
-                                子供の世話経験
-                                <span
-                                    className={styles.modalStaffDetailItemIcon}
-                                    onClick={handleChangeChildcareDetail}
-                                >
-                                    <BsEyeFill />
-                                </span>
-                            </label> */}
-                            <CertificateModal
-                                isOpen={openChildcareDetail}
-                                onCloseModal={handleChangeChildcareDetail}
-                                renderData={nannyChildcareCertificate()}
-                            />
-                            {/* <span className={styles.inputField}>
-                                <p className={styles.inputFieldText}>{nanny.care_exp}</p>
-                            </span> */}
-
                             <label className={styles.labelName}>
                                 Languages
-                                <span
-                                    className={styles.modalStaffDetailItemIcon}
-                                    onClick={handleOpenLanguageDetail}
-                                >
-                                    {/* <BsEyeFill /> */}
-                                </span>
                             </label>
-                            <CertificateModal
-                                isOpen={openLanguageDetail}
-                                onCloseModal={handleCloseLanguageDetail}
-                                renderData={nannyLanguagesCer()}
-                            />
                             <span className={styles.inputField}>
                                 <p className={styles.inputFieldText}>{nannyLanguagesString}</p>
                             </span>
-
-                            {/* <label className={styles.labelName}>価格</label>
-                            <span className={styles.staffPrice}> {formatNumber(nanny.salary)} VND/日</span> */}
                         </div>
 
                         <div className={styles.rightBox}>
@@ -421,7 +389,7 @@ export default function DetailNanny() {
                                         onClick={handleOpen}
                                         sx={{ width: '300px', fontWeight: 600 , color: 'black'}}
                                     >
-                                        Report
+                                        Feedback
                                     </FeedbackButton>
                                 </Box>
                                 <Modal
@@ -443,10 +411,10 @@ export default function DetailNanny() {
                                             fontWeight="bold"
                                             fontSize="28px"
                                         >
-                                            フィードバック
+                                            Feedback
                                         </Typography>
                                         <Typography id="modal-modal-description" sx={{ mt: 2 }} fontWeight="bold">
-                                            星付け
+                                            Stars
                                         </Typography>
                                         <Typography sx={{ marginLeft: 8 }}>
                                             <Rating
@@ -488,7 +456,7 @@ export default function DetailNanny() {
                                             <MyButton onClick={FeedBack} sx={{ marginRight: '25px' }}>
                                                 OK
                                             </MyButton>
-                                            <MyButton onClick={handleClose}>キャンセル</MyButton>
+                                            <MyButton onClick={handleClose}>Cancel</MyButton>
                                         </Typography>
                                     </Box>
                                 </Modal>
@@ -496,7 +464,7 @@ export default function DetailNanny() {
                         </div>
                     </div>
 
-                    {/* <span className={styles.commentText}>コメント</span> */}
+                    <span className={styles.commentText}>Comments</span>
                     <div
                         // ref={parent}
                         className={styles.container3}
@@ -517,7 +485,7 @@ export default function DetailNanny() {
                                     fontSize="28px"
                                     textAlign={'center'}
                                 >
-                                    コメントを削除しますか？
+                                    Delete comment?
                                 </Typography>
                                 <Typography
                                     id="modal-modal-description"
@@ -525,8 +493,7 @@ export default function DetailNanny() {
                                     fontWeight="semibold"
                                     textAlign={'center'}
                                 >
-                                    コメントを削除してもよろしいですか？
-                                    削除した後は復元することはできません。
+                                    Are you sure you want to delete this comment?
                                 </Typography>
 
                                 <Typography
