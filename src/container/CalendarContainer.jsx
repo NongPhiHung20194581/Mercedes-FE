@@ -17,7 +17,7 @@ const CalendarContainer = () => {
 
     useEffect(() => {
         if (!data) {
-            getProfileForUser(useId)
+            getProfileForUser(userId)
                 .then((res) => {
                     const user_info = res.data.result;
                     dispatch(updateUserInfo({ fullName: user_info.name }));
