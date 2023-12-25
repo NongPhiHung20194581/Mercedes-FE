@@ -78,7 +78,7 @@ export default function DetailNanny() {
 
   const fetchData = async () => {
     const reponse = await fetch(
-      'https://babybuddies-be-dev.onrender.com/api/v1/staffs/' + id,
+      'https://api.hustutor.dobuiquanganh.com/v1/staffs/' + id,
     );
     const reponseJSON = await reponse.json();
     setNanny(reponseJSON.result);

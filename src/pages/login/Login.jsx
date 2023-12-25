@@ -54,6 +54,7 @@ export default function Login() {
     const navigate = useNavigate();
     const { isLogin } = useSelector(authSelector);
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [open, setOpen] = useState(true);
 
     const handleChangeEmail = (event) => {
@@ -61,6 +62,14 @@ export default function Login() {
         if (event.target) {
             const { value } = event.target;
             setEmail(value);
+        }
+    }
+
+    const handleChangePassword = (event) => {
+        setUserIdError(false);
+        if (event.target) {
+            const { value } = event.target;
+            setPassword(value);
         }
     }
 
@@ -79,15 +88,15 @@ export default function Login() {
         let redirectPath;
 
         if (email === 'admin@hust.edu.vn') {
-            loginPromise = loginUser('647b77348af6c322511fed6c');
+            loginPromise = loginUser('647b77348af6c322511fed6c' && password === '123456' && role === 'admin');
             redirectPath = "/hired";
-        } else if (email === 'lythanhnhi@soict.hust.edu.vn') {
+        } else if (email === 'lythanhnhi@soict.hust.edu.vn' && password === '123456' && role === 'teacher') {
             loginPromise = loginUser('647b77348af6c322511fed78');
             redirectPath = "/profile";
-        } else if (email === 'ngoclinh@sis.hust.edu.vn') {
+        } else if (email === 'ngoclinh@sis.hust.edu.vn' && password === '123456' && role === 'tutor') {
             loginPromise = loginUser('647b77348af6c322511fed5d');
             redirectPath = "/profile";
-        } else if (email === 'hoangphuong@sis.hust.edu.vn') {
+        } else if (email === 'hoangphuong@sis.hust.edu.vn' && password === '123456' && role === 'student') {
             loginPromise = loginUser('647b77348af6c322511fed5e');
             redirectPath = "/profile";
         } else {
@@ -106,7 +115,7 @@ export default function Login() {
                     setEmailError(true);
                 });
         } else {
-            notify_failed('Invalid email!');
+            notify_failed('Invalid email, password or role. Please try again!');
         }
     };
 
@@ -165,6 +174,20 @@ export default function Login() {
                                         autoFocus
                                         value={email}
                                         onChange={handleChangeEmail}
+                                        InputLabelProps={{ style: { color: 'white' } }}
+                                    />
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        fullWidth
+                                        id="password"
+                                        label="Enter password"
+                                        name="password"
+                                        autoComplete="password"
+                                        autoFocus
+                                        type="password"
+                                        value={password}
+                                        onChange={handleChangePassword}
                                         InputLabelProps={{ style: { color: 'white' } }}
                                     />
 
