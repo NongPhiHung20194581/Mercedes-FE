@@ -1,39 +1,42 @@
 :root {
-    --primary-color: #9C2C30;
-    --secondary-color: #9C2C30;
+    --primary-color: #9c2c30;
+    --secondary-color: #9c2c30;
     --third-color: #72c78a;
 }
 
 // import font-family
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap');
 
 // loading style
-@import url("./partials/loading/_loading_style.scss");
+@import url('./partials/loading/_loading_style.scss');
 
 //home style
-@import url("./partials/home/_home.scss");
-@import url("./partials/home/_staff_card.scss");
-@import url("./partials/home/newfilter.scss");
+@import url('./partials/home/_home.scss');
+@import url('./partials/home/_staff_card.scss');
+@import url('./partials/home/newfilter.scss');
 
 // global style
-@import url("./partials/paging/_paging.scss");
-@import url("./partials/header/_header.scss");
+@import url('./partials/paging/_paging.scss');
+@import url('./partials/header/_header.scss');
 
 //staffdetail style
-@import url("./partials/staffdetail/_staffdetail.scss");
-@import url("./partials/staffdetail/_bookingform.scss");
+@import url('./partials/staffdetail/_staffdetail.scss');
+@import url('./partials/staffdetail/_bookingform.scss');
 
 //profile style
-@import url("./partials/profile/_profile.scss");
+@import url('./partials/profile/_profile.scss');
+
+//calendar style
+@import url('./partials/calendar/_calendar.scss');
 
 //hired style
-@import url("./partials/hired/_hired.scss");
+@import url('./partials/hired/_hired.scss');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 body {

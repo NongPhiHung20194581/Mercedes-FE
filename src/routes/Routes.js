@@ -11,6 +11,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import NotFoundPage from '../pages/404/NotFoundPage';
 import ProfilePage from '../pages/profile/ProfilePage';
+import CalendarPage from '../pages/calendar';
 
 export const publicRoutes = [
     { path: ROUTE.LAYOUT, element: HomePage, layout: RegisterLayout },
@@ -21,6 +22,7 @@ export const publicRoutes = [
     { path: ROUTE.NANNY_DETAIL, element: DetailNanny, layout: DefaultLayout },
     { path: ROUTE.PROFILE, element: ProfilePage, layout: DefaultLayout },
     { path: ROUTE.HIRED, element: Hired, layout: DefaultLayout },
+    { path: ROUTE.CALENDAR, element: CalendarPage, layout: DefaultLayout },
 ];
 
 export const routes = [
@@ -33,7 +35,7 @@ export const routes = [
             { path: ROUTE.LOGIN, element: <Login /> },
             { path: ROUTE.SIGNUP, element: <SignUp /> },
             { path: ROUTE.NANNY_DETAIL, element: <DetailNanny /> },
-        ]
+        ],
     },
     {
         path: ROUTE.LAYOUT,
@@ -42,24 +44,24 @@ export const routes = [
         children: [
             { path: ROUTE.PROFILE, element: <ProfilePage /> },
             { path: ROUTE.HIRED, element: <Hired /> },
-        ]
+            { path: ROUTE.CALENDAR, element: <CalendarPage /> },
+        ],
     },
     {
-        path: "*",
+        path: '*',
         is404: true,
-        element: <NotFoundPage />
-    }
-].map(route => {
-
+        element: <NotFoundPage />,
+    },
+].map((route) => {
     if (route.isPrivate) {
         return {
             ...route,
-            element: <PrivateRoute>{route.element}</PrivateRoute>
-        }
+            element: <PrivateRoute>{route.element}</PrivateRoute>,
+        };
     }
 
     return {
         ...route,
-        element: <PublicRoute>{route.element}</PublicRoute>
-    }
-})
+        element: <PublicRoute>{route.element}</PublicRoute>,
+    };
+});
