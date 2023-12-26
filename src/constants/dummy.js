@@ -1,0 +1,98 @@
+export const dummyScheduleData = {
+    classes: [
+        {
+            classId: 143531,
+            classIdSub: 143531,
+            className: 'Kỹ năng ITSS học bằng tiếng Nhật 2',
+            courseId: 'IT3382',
+        },
+        {
+            classId: 143522,
+            classIdSub: 143522,
+            className: 'Lập trình hệ thống',
+            courseId: 'IT4132',
+        },
+        {
+            classId: 143523,
+            classIdSub: 143523,
+            className: 'Kiến trúc phần mềm mạng',
+            courseId: 'IT4152',
+        },
+        {
+            classId: 143524,
+            classIdSub: 143524,
+            className: 'Bảo mật mạng máy tính',
+            courseId: 'IT4262',
+        },
+        {
+            classId: 143520,
+            classIdSub: 143520,
+            className: 'Mạng Internet',
+            courseId: 'IT4652',
+        },
+        {
+            classId: 143702,
+            classIdSub: 143702,
+            className: 'Nghiên cứu tốt nghiệp 2',
+            courseId: 'IT5022',
+        },
+    ],
+    schedule: [
+        { weekdays: 3, duration: '06:45-08:15', weeks: '3-10, 12-19', room: 'D9-401', classId: 143520 },
+        { weekdays: 3, duration: '08:25-10:05', weeks: '3-10, 12-19', room: 'D5-401', classId: 143524 },
+        { weekdays: 4, duration: '10:15-11:45', weeks: '3-10, 12-19', room: 'D5-302', classId: 143531 },
+        { weekdays: 4, duration: '12:30-14:00', weeks: '3-10, 12-19', room: 'D5-302', classId: 143531 },
+        { weekdays: 5, duration: '06:45-08:15', weeks: '3-10, 12-19', room: 'D9-501', classId: 143523 },
+        { weekdays: 5, duration: '08:25-10:05', weeks: '3-10, 12-19', room: 'D9-501', classId: 143522 },
+    ],
+};
+
+export const dummyBookingData = [
+    { full_name: 'Sallie Rose', time: '10:00-11:45, WED', status: 'Waiting', code: 'VN', phone: '0912343245', id: 1 },
+    {
+        full_name: 'Christopher Carpenter',
+        time: '11:00-11:45, TUE',
+        status: 'Reject',
+        code: 'JP',
+        phone: '0912343246',
+        id: 2,
+    },
+    {
+        full_name: 'Christian Hernandez',
+        time: '08:00-10:00, MON',
+        status: 'Waiting',
+        code: 'FR',
+        phone: '0912343247',
+        id: 3,
+    },
+    { full_name: 'Henry Griffin', time: '11:00-12:15, THU', status: 'Success', code: 'CN', phone: '0912343248', id: 4 },
+    { full_name: 'Lillie Simpson', time: '09:00-10:00, FRI', status: 'Reject', code: 'CN', phone: '0912342245', id: 5 },
+    { full_name: 'Harvey Stone', time: '14:00-16:15, THU', status: 'Waiting', code: 'KR', phone: '0912313245', id: 6 },
+    { full_name: 'Ernest Craig', time: '08:00-10:00, WED', status: 'Waiting', code: 'JP', phone: '0912343245', id: 7 },
+    {
+        full_name: 'Jonathan Jordan',
+        time: '14:00-16:15, THU',
+        status: 'Reject',
+        code: 'EN',
+        phone: '0912343241',
+        id: 8,
+    },
+    {
+        full_name: 'Marcus Gutierrez',
+        time: '08:00-10:00, FRI',
+        status: 'Waiting',
+        code: 'US',
+        phone: '0912943245',
+        id: 9,
+    },
+    { full_name: 'Kenneth Page', time: '13:00-14:15, THU', status: 'Success', code: 'VI', phone: '0912143245', id: 10 },
+    { full_name: 'Leila Bowman', time: '09:00-10:30, MON', status: 'Waiting', code: 'EN', phone: '0912143243', id: 11 },
+    {
+        full_name: 'Mildred Jacobs',
+        time: '15:00-16:30, FRI',
+        status: 'Reject',
+        code: 'FR',
+        phone: '0917343235',
+        id: 12,
+    },
+];

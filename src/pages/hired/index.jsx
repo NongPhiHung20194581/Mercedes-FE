@@ -1,51 +1,60 @@
-import React, { useEffect, useState } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { Avatar, Box, Button, Select, MenuItem, InputLabel } from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Avatar, Box, Button } from '@mui/material';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useSelector } from 'react-redux';
-import { authSelector } from '../../redux/selector';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { getProfileForUser } from '../../api/profile.api';
+import { dummyBookingData } from '../../constants/dummy';
+
+const Status = {
+    ALL: 'ALL',
+    SUCCESS: 'Success',
+    REJECT: 'Reject',
+    WAITING: 'Waiting',
+};
 
 export default function Hired() {
-    const [bookings, setBookings] = useState([]);
+    const [bookings, setBookings] = useState(dummyBookingData);
     const [currentPage, setCurrentPage] = useState(1);
-    const [bookingsPerPage] = useState(5); 
-    const { userId } = useSelector(authSelector);
+    const [bookingsPerPage] = useState(5);
+    const [filterStatus, setStatus] = useState(Status.ALL);
+    const [displayBookings, setDisplayBookings] = useState([]);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (userId) {
-            getProfileForUser(userId)
-                .then((res) => {
-                    const bookings = res.data.result.booking;
-                    setBookings([...bookings]);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        }
-    }, [userId]);
-
-    const indexOfLastBooking = currentPage * bookingsPerPage;
-    const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
-    const currentBookings = bookings.slice(indexOfFirstBooking, indexOfLastBooking);
-
-    const totalPages = Math.ceil(bookings.length / bookingsPerPage);
+    const totalPages =
+        filterStatus === Status.ALL
+            ? Math.ceil(bookings.length / bookingsPerPage)
+            : Math.ceil(bookings.filter((b) => b.status === filterStatus).length / bookingsPerPage);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+    const indexOfLastBooking = currentPage * bookingsPerPage;
+    const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
     const pageNumbers = [];
     for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(i);
     }
+
+    const handleChangeStatus = (e) => {
+        setCurrentPage(() => 1);
+        setStatus(() => e.target.value);
+    };
+
+    const acceptBooking = (id) => {
+        setBookings(() => bookings.map((b) => (b.id === id ? { ...b, status: Status.SUCCESS } : b)));
+    };
+
+    const rejectBooking = (id) => {
+        setBookings(() => bookings.map((b) => (b.id === id ? { ...b, status: Status.REJECT } : b)));
+    };
 
     return (
         <div className="main-session hired-container">
@@ -56,7 +65,25 @@ export default function Hired() {
                 flexDirection={'column'}
                 paddingBottom={'40px'}
             >
-                <h1 style={{ textAlign: 'left', width: '80%', padding: '20px 0', fontSize: '40px' }}>予約管理</h1>
+                <h1 style={{ textAlign: 'left', width: '80%', padding: '20px 0', fontSize: '40px' }}>
+                    Booking management
+                </h1>
+                <div className="status-select">
+                    <InputLabel id="demo-select-small-label">Status:</InputLabel>
+                    <Select
+                        labelId="select-status"
+                        value={filterStatus}
+                        onChange={handleChangeStatus}
+                        defaultValue={Status.ALL}
+                        size="small"
+                    >
+                        {Object.keys(Status).map((s) => (
+                            <MenuItem key={s} value={Status[s]}>
+                                {s}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </div>
                 <TableContainer component={Paper} sx={{ width: '80%' }}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
@@ -65,45 +92,86 @@ export default function Hired() {
                                     Staff
                                 </TableCell>
                                 <TableCell width={300} align="left" sx={{ fontWeight: 600, fontSize: 18 }}>
-                                    予約時間
+                                    Booked time
                                 </TableCell>
                                 <TableCell width={200} align="left" sx={{ fontWeight: 600, fontSize: 18 }}>
-                                    ステータス
+                                    Status
                                 </TableCell>
                                 <TableCell width={100} align="right" sx={{ fontWeight: 600, fontSize: 18 }}>
-                                    アクション
+                                    Actions
                                 </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {currentBookings.map((row) => (
-                                <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                    <TableCell component="th" scope="row">
-                                        <Box display={'flex'}>
-                                            <Avatar alt="Remy Sharp" src={row.image_link} />
-                                            <Box marginLeft={'8px'} display={'flex'} flexDirection={'column'}>
-                                                <span>{row.full_name}</span>
-                                                <span style={{ color: '#B5B5C3' }}>{row.code || 'CN' + row.phone}</span>
+                            {bookings
+                                .filter((b) => (filterStatus === Status.ALL ? true : b.status === filterStatus))
+                                .slice(indexOfFirstBooking, indexOfLastBooking)
+                                .map(({ full_name, time, status, code, phone, image_link, id }) => (
+                                    <TableRow key={id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                        <TableCell component="th" scope="row">
+                                            <Box display={'flex'}>
+                                                <Avatar alt="Remy Sharp" src={image_link} />
+                                                <Box marginLeft={'8px'} display={'flex'} flexDirection={'column'}>
+                                                    <span>{full_name}</span>
+                                                    <span style={{ color: '#B5B5C3' }}>{code + '-' + phone}</span>
+                                                </Box>
                                             </Box>
-                                        </Box>
-                                    </TableCell>
-                                    <TableCell align="left">
-                                        {row.start_day?.split('T')[0].replace(/-/g, '/')}-
-                                        {row.end_day?.split('T')[0].replace(/-/g, '/')}
-                                    </TableCell>
-                                    <TableCell align="left">{row.status}</TableCell>
-                                    <TableCell align="right">
-                                        <span
-                                            onClick={() => {
-                                                navigate(`/details/${row.staff_id}`);
-                                            }}
-                                        >
-                                            <RemoveRedEyeIcon className="hired-table__icon" />
-                                        </span>
-                                        <DeleteIcon className="hired-table__icon" />
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                                        </TableCell>
+                                        <TableCell align="left">{time}</TableCell>
+                                        <TableCell align="left">{status}</TableCell>
+                                        <TableCell align="right">
+                                            <div className="actions">
+                                                <span
+                                                    className="accept-icon"
+                                                    onClick={
+                                                        status === Status.WAITING
+                                                            ? () => acceptBooking(id)
+                                                            : () => {
+                                                                  console.log(id);
+                                                              }
+                                                    }
+                                                >
+                                                    <CheckIcon
+                                                        className={
+                                                            status === Status.WAITING
+                                                                ? 'hired-table__icon'
+                                                                : 'hired-table__icon disabled-icon'
+                                                        }
+                                                    />
+                                                </span>
+                                                <span
+                                                    className="reject-icon"
+                                                    onClick={
+                                                        status === Status.WAITING
+                                                            ? () => rejectBooking(id)
+                                                            : () => {
+                                                                  console.log(id);
+                                                              }
+                                                    }
+                                                >
+                                                    <ClearIcon
+                                                        className={
+                                                            status === Status.WAITING
+                                                                ? 'hired-table__icon'
+                                                                : 'hired-table__icon disabled-icon'
+                                                        }
+                                                    />
+                                                </span>
+                                                <span
+                                                    className="view-icon"
+                                                    onClick={() => {
+                                                        navigate(`/details/${'647b77348af6c322511fed5d'}`);
+                                                    }}
+                                                >
+                                                    <RemoveRedEyeIcon className="hired-table__icon" />
+                                                </span>
+                                                <span className="delete-icon">
+                                                    <DeleteIcon className="hired-table__icon" />
+                                                </span>
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -121,7 +189,6 @@ export default function Hired() {
                         </Button>
                     ))}
                 </Box>
-             
             </Box>
         </div>
     );
