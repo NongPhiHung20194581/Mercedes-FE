@@ -1,13 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const authSlice = createSlice({
-    name: "auth",
+    name: 'auth',
     initialState: {
-        isLogin: localStorage.getItem("isLogin") || false,
-        userId: localStorage.getItem("userId"),
+        isLogin: localStorage.getItem('isLogin') || false,
+        userId: localStorage.getItem('userId'),
         fullName: null,
         username: null,
         status: null,
+        avatar: 'avt.png',
     },
     reducers: {
         saveUserInfo: (state, action) => {
@@ -26,7 +27,7 @@ const authSlice = createSlice({
             const payload = action.payload;
             for (const key in payload) {
                 if (Object.hasOwnProperty.call(state, key)) {
-                    state[key] = payload[key]
+                    state[key] = payload[key];
                 }
             }
         },
@@ -37,9 +38,9 @@ const authSlice = createSlice({
             state.fullName = null;
             state.username = null;
             state.status = null;
-        }
-    }
-})
+        },
+    },
+});
 
 export const { logout, saveUserInfo, updateUserInfo } = authSlice.actions;
-export default authSlice.reducer
+export default authSlice.reducer;
