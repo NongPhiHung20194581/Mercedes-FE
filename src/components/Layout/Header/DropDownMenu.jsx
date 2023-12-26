@@ -13,21 +13,6 @@ const DropDownMenu = ({ height, setHeight }) => {
     const { data } = useSelector(profileSelector);
 
     return (
-<<<<<<< HEAD
-        <AnimateHeight className='dropdown-menu'
-            height={height}
-            duration={250}
-        >
-            <Link className='dropdown-menu__item'
-                to={ROUTE.PROFILE}
-                onClick={setHeight}
-            >Profile</Link>
-            <Link className='dropdown-menu__item'
-            // to={ROUTE.HIRED}
-            // onClick={setHeight}
-            >Manage bookings</Link>
-            <div className='dropdown-menu__item'
-=======
         <AnimateHeight className="dropdown-menu" height={height} duration={250}>
             <Link className="dropdown-menu__item" to={ROUTE.PROFILE} onClick={setHeight}>
                 Profile
@@ -39,27 +24,22 @@ const DropDownMenu = ({ height, setHeight }) => {
             )}
             <Link
                 className="dropdown-menu__item"
-                // to={ROUTE.HIRED}
-                // onClick={setHeight}
+            // to={ROUTE.HIRED}
+            // onClick={setHeight}
             >
                 Manage bookings
             </Link>
             <div
                 className="dropdown-menu__item"
->>>>>>> master
                 onClick={() => {
                     dispatch(logout());
                     dispatch(clearProfile());
                     setHeight();
                     navigate('/');
                 }}
-<<<<<<< HEAD
-            >Log out</div>
-=======
             >
                 Log out
             </div>
->>>>>>> master
         </AnimateHeight>
     );
 };
