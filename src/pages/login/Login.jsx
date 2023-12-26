@@ -49,7 +49,7 @@ const notify_failed = (message) => toast.error(message, {
 export default function Login() {
     const [userIdError, setUserIdError] = useState(false);
     const [emailError, setEmailError] = useState(false);
-    const [role, setRole] = useState('admin');
+    const [role, setRole] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { isLogin } = useSelector(authSelector);
@@ -87,8 +87,8 @@ export default function Login() {
         let loginPromise;
         let redirectPath;
 
-        if (email === 'admin@hust.edu.vn') {
-            loginPromise = loginUser('647b77348af6c322511fed6c' && password === '123456' && role === 'admin');
+        if (email === 'admin@hust.edu.vn' && password === '123456' && role === 'admin') {
+            loginPromise = loginUser('647b77348af6c322511fed6c');
             redirectPath = "/hired";
         } else if (email === 'lythanhnhi@soict.hust.edu.vn' && password === '123456' && role === 'teacher') {
             loginPromise = loginUser('647b77348af6c322511fed78');

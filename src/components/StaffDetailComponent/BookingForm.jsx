@@ -64,7 +64,7 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
             userId: currentUser
         };
 
-        axios.post('https://api.hustutor.dobuiquanganh.com/v1/bookings/store', formData)
+        axios.post('https://babybuddies-be-dev.onrender.com/api/v1/bookings/store', formData)
             .then(() => {
                 setMessage('');
                 setIsBooking(false);
@@ -106,8 +106,8 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                 padding={"20px 25px"}
             >
                 <Box width={'100%'} className="form-container">
-                    <h1 class="title">                    
-                    Booking Confirmation
+                    <h1 class="title">
+                        Booking Confirmation
                     </h1>
                     <span class="subtitle">Staff Name</span>
                     <Box
@@ -169,7 +169,7 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                                 maxRows={4}
                                 sx={{margin: '10px 0', width: '80%'}}
                             /> */}
-                            <br />
+                    <br />
                     <textarea
                         name="des"
                         id=""

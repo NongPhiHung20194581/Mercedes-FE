@@ -124,7 +124,7 @@ export default function ListNanny() {
 
             const fetchData = async () => {
                 const reponse = await fetch(
-                    'https://api.hustutor.dobuiquanganh.com/v1/home?fbclid=IwAR0YWt_3e9gKOT4E6uDFFe5aQl4lZ6GMheji7DLbuXTORu1V2j5x8JUrDQQ',
+                    'https://babybuddies-be-dev.onrender.com/api/v1/home?fbclid=IwAR0YWt_3e9gKOT4E6uDFFe5aQl4lZ6GMheji7DLbuXTORu1V2j5x8JUrDQQ',
                 );
                 const reponseJSON = await reponse.json();
                 setNannys(reponseJSON.result.staffs);
@@ -169,7 +169,7 @@ export default function ListNanny() {
             delete formData.careExp;
         }
 
-        postData('https://api.hustutor.dobuiquanganh.com/v1/search/matching', formData)
+        postData('https://babybuddies-be-dev.onrender.com/api/v1/search/matching', formData)
             .then((data) => {
                 console.log(data);
                 setFilter(false);
@@ -208,7 +208,7 @@ export default function ListNanny() {
             delete formData.salary;
         }
 
-        postData('https://api.hustutor.dobuiquanganh.com/v1/search/matching', formData)
+        postData('https://babybuddies-be-dev.onrender.com/api/v1/search/matching', formData)
             .then((data) => {
                 console.log(data);
                 setFilter(false);
@@ -716,43 +716,43 @@ export default function ListNanny() {
                                                     </Typography>
 
                                                     {
-                                                        (isNaN(parseFloat(nanny.matching_score)) || (parseFloat(nanny.matching_score) == 0))  &&
+                                                        (isNaN(parseFloat(nanny.matching_score)) || (parseFloat(nanny.matching_score) == 0)) &&
                                                         (
-                                                        <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-                                                        <CircularProgress
-                                                            variant="determinate"
-                                                            // value={20}
-                                                            value={
-                                                                parseFloat(nanny.matching_score)
-                                                            }
-                                                            sx={{ color: 'red' }}
-                                                        />
-                                                        <Box
-                                                            sx={{
-                                                                top: 0,
-                                                                left: 0,
-                                                                bottom: 0,
-                                                                right: 0,
-                                                                position: 'absolute',
-                                                                display: 'flex',
-                                                                alignItems: 'center',
-                                                                justifyContent: 'center',
-                                                            }}
-                                                        >
-                                                            <Typography
-                                                                variant="caption"
-                                                                component="div"
-                                                                color="black"
-                                                                fontWeight="bold"
-                                                            >
-                                                                {`${Math.round(
-                                                                    parseFloat(
-                                                                        parseFloat(nanny.matching_score),
-                                                                    ),
-                                                                )}%`}
-                                                            </Typography>
-                                                        </Box>
-                                                        </Box>
+                                                            <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+                                                                <CircularProgress
+                                                                    variant="determinate"
+                                                                    // value={20}
+                                                                    value={
+                                                                        parseFloat(nanny.matching_score)
+                                                                    }
+                                                                    sx={{ color: 'red' }}
+                                                                />
+                                                                <Box
+                                                                    sx={{
+                                                                        top: 0,
+                                                                        left: 0,
+                                                                        bottom: 0,
+                                                                        right: 0,
+                                                                        position: 'absolute',
+                                                                        display: 'flex',
+                                                                        alignItems: 'center',
+                                                                        justifyContent: 'center',
+                                                                    }}
+                                                                >
+                                                                    <Typography
+                                                                        variant="caption"
+                                                                        component="div"
+                                                                        color="black"
+                                                                        fontWeight="bold"
+                                                                    >
+                                                                        {`${Math.round(
+                                                                            parseFloat(
+                                                                                parseFloat(nanny.matching_score),
+                                                                            ),
+                                                                        )}%`}
+                                                                    </Typography>
+                                                                </Box>
+                                                            </Box>
                                                         )
                                                     }
 

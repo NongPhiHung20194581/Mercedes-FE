@@ -65,7 +65,7 @@ export default function DetailNanny() {
     React.useEffect(() => {
         const fetchData = async () => {
             const reponse = await fetch(
-                'https://api.hustutor.dobuiquanganh.com/v1/home?fbclid=IwAR0YWt_3e9gKOT4E6uDFFe5aQl4lZ6GMheji7DLbuXTORu1V2j5x8JUrDQQ',
+                'https://babybuddies-be-dev.onrender.com/api/v1/home?fbclid=IwAR0YWt_3e9gKOT4E6uDFFe5aQl4lZ6GMheji7DLbuXTORu1V2j5x8JUrDQQ',
             );
             const reponseJSON = await reponse.json();
             setNannys(reponseJSON.result.staffs);
@@ -108,7 +108,7 @@ export default function DetailNanny() {
     function FeedBack() {
         console.log(value);
         console.log(review);
-        const url = 'https://api.hustutor.dobuiquanganh.com/v1/ratings/staff/' + id;
+        const url = 'https://babybuddies-be-dev.onrender.com/api/v1/ratings/staff/' + id;
         console.log(url);
         fetch(url, {
             method: 'POST',
@@ -123,7 +123,7 @@ export default function DetailNanny() {
             //load lai phan danh gia cua nanny sau khi post
             const fetchData = async () => {
                 const reponse = await fetch(
-                    'https://api.hustutor.dobuiquanganh.com/v1/home?fbclid=IwAR0YWt_3e9gKOT4E6uDFFe5aQl4lZ6GMheji7DLbuXTORu1V2j5x8JUrDQQ',
+                    'https://babybuddies-be-dev.onrender.com/api/v1/home?fbclid=IwAR0YWt_3e9gKOT4E6uDFFe5aQl4lZ6GMheji7DLbuXTORu1V2j5x8JUrDQQ',
                 );
                 const reponseJSON = await reponse.json();
                 setNannys(reponseJSON.result.staffs);
@@ -248,7 +248,7 @@ export default function DetailNanny() {
 
     //handleDelete
     const handleDeleteCMT = async (id) => {
-        await fetch(`https://api.hustutor.dobuiquanganh.com/v1/ratings`, { method: 'DELETE' });
+        await fetch(`https://babybuddies-be-dev.onrender.com/api/v1/ratings`, { method: 'DELETE' });
         setNannys(nanny.filter((nanny) => nanny.id !== id));
         setOpenDelete(true);
     };
