@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Avatar, Box, Button } from '@mui/material';
+import { Avatar, Box, Button, FormControl, MenuItem, Select } from '@mui/material'; 
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector } from 'react-redux';
@@ -17,7 +17,8 @@ import { getProfileForUser } from '../../api/profile.api';
 export default function Hired() {
     const [bookings, setBookings] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [bookingsPerPage] = useState(5); 
+    const [bookingsPerPage] = useState(5);
+    const [selectedStatus, setSelectedStatus] = useState('');
     const { userId } = useSelector(authSelector);
     const navigate = useNavigate();
 
@@ -34,9 +35,13 @@ export default function Hired() {
         }
     }, [userId]);
 
+    const uniqueStatusValues = Array.from(new Set(bookings.map((booking) => booking.status)));
+
     const indexOfLastBooking = currentPage * bookingsPerPage;
     const indexOfFirstBooking = indexOfLastBooking - bookingsPerPage;
-    const currentBookings = bookings.slice(indexOfFirstBooking, indexOfLastBooking);
+    const currentBookings = selectedStatus
+        ? bookings.filter((booking) => booking.status === selectedStatus).slice(indexOfFirstBooking, indexOfLastBooking)
+        : bookings.slice(indexOfFirstBooking, indexOfLastBooking);
 
     const totalPages = Math.ceil(bookings.length / bookingsPerPage);
 
@@ -56,7 +61,28 @@ export default function Hired() {
                 flexDirection={'column'}
                 paddingBottom={'40px'}
             >
-                <h1 style={{ textAlign: 'left', width: '80%', padding: '20px 0', fontSize: '40px' }}>予約管理</h1>
+                <h1 style={{ textAlign: 'left', width: '80%', padding: '20px 0', fontSize: '40px' }}>Booking Requests</h1>
+
+                <Box marginBottom={2} marginLeft={170}>
+                    <FormControl>
+                        <Select
+                            value={selectedStatus}
+                            onChange={(e) => setSelectedStatus(e.target.value)}
+                            displayEmpty
+                            inputProps={{ 'aria-label': 'Select Status' }}
+                        >
+                            <MenuItem value="">
+                                All
+                            </MenuItem>
+                            {uniqueStatusValues.map((status) => (
+                                <MenuItem key={status} value={status}>
+                                    {status}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </Box>
+
                 <TableContainer component={Paper} sx={{ width: '80%' }}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
@@ -65,13 +91,13 @@ export default function Hired() {
                                     Staff
                                 </TableCell>
                                 <TableCell width={300} align="left" sx={{ fontWeight: 600, fontSize: 18 }}>
-                                    予約時間
+                                    Booking Time
                                 </TableCell>
                                 <TableCell width={200} align="left" sx={{ fontWeight: 600, fontSize: 18 }}>
-                                    ステータス
+                                    Status
                                 </TableCell>
                                 <TableCell width={100} align="right" sx={{ fontWeight: 600, fontSize: 18 }}>
-                                    アクション
+                                    Action
                                 </TableCell>
                             </TableRow>
                         </TableHead>
@@ -121,7 +147,6 @@ export default function Hired() {
                         </Button>
                     ))}
                 </Box>
-             
             </Box>
         </div>
     );

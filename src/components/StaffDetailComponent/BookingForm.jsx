@@ -125,7 +125,6 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                         <div style={{ width: '49%' }}>
                             <span class="subtitle">Start Date</span>
                             <DatePicker
-                                showIcon
                                 selected={startDate}
                                 onChange={(date) => setStartDate(date)}
                                 className='datepicker'
@@ -136,7 +135,6 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                         <div style={{ width: '49%' }}>
                             <span class="subtitle">End Date</span>
                             <DatePicker
-                                showIcon
                                 selected={endDate}
                                 onChange={(date) => {
                                     setEndDate(date)

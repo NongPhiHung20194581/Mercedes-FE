@@ -191,7 +191,6 @@ export default function ListNanny() {
             careExp: childCareF.length === 1 ? childCareF[0] : childCareF,
             salary: priceF.length === 1 ? priceF[0] : priceF,
         };
-        console.log(formData);
         if (languageF.length === 0) {
             delete formData.userLanguage;
         }
@@ -207,7 +206,6 @@ export default function ListNanny() {
         if (priceF.length === 0) {
             delete formData.salary;
         }
-
         postData('https://api.hustutor.dobuiquanganh.com/v1/search/matching', formData)
             .then((data) => {
                 console.log(data);
