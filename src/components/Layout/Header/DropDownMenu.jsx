@@ -24,8 +24,8 @@ const DropDownMenu = ({ height, setHeight }) => {
             )}
             <Link
                 className="dropdown-menu__item"
-                // to={ROUTE.HIRED}
-                // onClick={setHeight}
+            // to={ROUTE.HIRED}
+            // onClick={setHeight}
             >
                 Manage bookings
             </Link>
