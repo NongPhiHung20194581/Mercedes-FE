@@ -17,13 +17,19 @@ const Header = () => {
     }
 
     return (
-        <div className='app-header'>
+        <div className='app-header' >
+           
             
-            <Link className="app-logo" to={ROUTE.HOME} >
-                <img src={require("../../../assets/img/logo1.png")} alt="" />
+            
+            <Link className="app-logo" to={ROUTE.HUST} >
+                <img className='app-logo-img' src={require("../../../assets/img/logo1.png")} alt="" />
                 
             </Link>
-            <h1 style={{color:'white'}}>Hệ thống quản trị đại học trực tuyến. <br/>Đại học bách khoa Hà Nội</h1>
+            
+            
+            <div className="app-header-name"><h1 className='app-header-name'>Đại học bách khoa Hà Nội <br/>Hệ thống quản trị đại học trực tuyến </h1></div>
+            
+            
             <div className="nav-links" >
                 {isLogin ?
                     <>{link2.map(link => (
@@ -38,7 +44,7 @@ const Header = () => {
                     :
                     <>{link1.map(link => (
                         <Link
-                            className={`nav-links__item ${link.className}`}
+                            className={`nav-links__item  ${link.className}`}
                             key={link.title}
                             to={link.path}
                         >
