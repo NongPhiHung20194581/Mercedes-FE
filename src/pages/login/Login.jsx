@@ -156,11 +156,11 @@ export default function Login() {
                         <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
                             <Box sx={{ backgroundColor: '#9b0504', color: 'white' }}>
                                 <DialogTitle>
-                                    <Typography variant="h5">Login</Typography>
+                                    <Typography variant="h5"sx={{ fontWeight:'bold' }}>Login</Typography>
                                     <Divider sx={{ marginTop: 1, backgroundColor: 'white' }} />
                                 </DialogTitle>
                                 <DialogContent>
-                                    <Typography variant="h7" align="center" sx={{ color: 'white', marginBottom: 2 }}>
+                                    <Typography variant="h7" align="center" sx={{ color: 'white', marginBottom: 2,fontWeight:'bold'}}>
                                         Đăng nhập bằng tài khoản Office365 (email trường)
                                     </Typography>
                                     <TextField
@@ -192,21 +192,25 @@ export default function Login() {
                                     />
 
                                     <FormControl component="fieldset" sx={{ mt: 2 }}>
-                                        <FormLabel component="legend">Choose role:</FormLabel>
+                                        <FormLabel component="legend" sx={{color:'white',fontWeight:'bold'}}>Choose role:</FormLabel>
                                         <RadioGroup row aria-label="role" name="row-radio-buttons-group" value={role} onChange={handleRoleChange}>
                                             <FormControlLabel value="admin" control={<Radio />} label="Admin" />
                                             <FormControlLabel value="teacher" control={<Radio />} label="Teacher" />
                                             <FormControlLabel value="tutor" control={<Radio />} label="Tutor" />
                                             <FormControlLabel value="student" control={<Radio />} label="Student" />
-                                        </RadioGroup>
+                                        </RadioGroup>   
                                     </FormControl>
                                 </DialogContent>
                                 <DialogActions sx={{ justifyContent: 'center' }}>
-                                    <Button onClick={handleClose} color="primary">
+                                    <Button onClick={handleClose} sx={{
+                                        backgroundColor:'white',
+                                        color:'var(--primary-color)',
+                                        fontWeight:'bold'
+                                    }}>
                                         Cancel
                                     </Button>
                                     {/* Thay đổi thành nút đăng nhập trong popup */}
-                                    <MyAppBar type="submit" onClick={handleSubmit} variant="contained" sx={{ textTransform: 'none', ':hover': { backgroundColor: '#106510' } }}>
+                                    <MyAppBar type="submit" onClick={handleSubmit} variant="contained" sx={{ textTransform: 'none', ':hover': { backgroundColor: '#106510' },fontWeight:'bold' }}>
                                         Log In
                                     </MyAppBar>
                                 </DialogActions>
