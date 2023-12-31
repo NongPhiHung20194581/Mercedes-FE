@@ -1,8 +1,8 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import { Avatar, Box, Button, Select, MenuItem, InputLabel } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import DeleteIcon from '@mui/icons-material/Delete';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { Avatar, Box, Button, InputLabel, MenuItem, Select } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,8 +11,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { dummyBookingData } from '../../constants/dummy';
+import { bookingSelector } from '../../redux/selector';
+import { setBooking } from '../../redux/slices/booking.slice';
 
 const Status = {
     ALL: 'ALL',
@@ -22,11 +24,11 @@ const Status = {
 };
 
 export default function Hired() {
-    const [bookings, setBookings] = useState(dummyBookingData);
+    const { booking: bookings } = useSelector(bookingSelector);
+    const dispatch = useDispatch();
     const [currentPage, setCurrentPage] = useState(1);
     const [bookingsPerPage] = useState(5);
     const [filterStatus, setStatus] = useState(Status.ALL);
-    const [displayBookings, setDisplayBookings] = useState([]);
     const navigate = useNavigate();
 
     const totalPages =
@@ -49,11 +51,11 @@ export default function Hired() {
     };
 
     const acceptBooking = (id) => {
-        setBookings(() => bookings.map((b) => (b.id === id ? { ...b, status: Status.SUCCESS } : b)));
+        dispatch(setBooking(bookings.map((b) => (b.id === id ? { ...b, status: Status.SUCCESS } : b))));
     };
 
     const rejectBooking = (id) => {
-        setBookings(() => bookings.map((b) => (b.id === id ? { ...b, status: Status.REJECT } : b)));
+        dispatch(setBooking(bookings.map((b) => (b.id === id ? { ...b, status: Status.REJECT } : b))));
     };
 
     return (
