@@ -58,6 +58,10 @@ export default function Hired() {
         dispatch(setBooking(bookings.map((b) => (b.id === id ? { ...b, status: Status.REJECT } : b))));
     };
 
+    const deleteBooking = (id) => {
+        dispatch(setBooking(bookings.filter((b) => b.id !== id)));
+    };
+
     return (
         <div className="main-session hired-container">
             <Box
@@ -167,7 +171,7 @@ export default function Hired() {
                                                 >
                                                     <RemoveRedEyeIcon className="hired-table__icon" />
                                                 </span>
-                                                <span className="delete-icon">
+                                                <span className="delete-icon" onClick={() => deleteBooking(id)}>
                                                     <DeleteIcon className="hired-table__icon" />
                                                 </span>
                                             </div>
