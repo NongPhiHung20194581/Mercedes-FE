@@ -19,6 +19,7 @@ function App() {
                     const { account_status, user_info, username } = res.data.result;
                     dispatch(updateUserInfo({ fullName: user_info.name, username, status: account_status }))
                     dispatch(saveProfileInfo(user_info));
+                    //console.log(user_info);
                 })
                 .catch(err => {
 
