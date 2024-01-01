@@ -13,7 +13,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BookingForm from '../../components/HomeComponent/BookingForm';
 import { useAutoAnimate } from '@formkit/auto-animate/react'
-import { getRole } from '../../components/StaffDetailComponent/getRole';
 
 
 import { profileSelector } from '../../../redux/selector';
