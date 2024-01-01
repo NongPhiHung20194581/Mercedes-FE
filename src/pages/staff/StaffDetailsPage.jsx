@@ -13,7 +13,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BookingForm from '../../components/HomeComponent/BookingForm';
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { getRole } from '../../components/StaffDetailComponent/getRole';
 
+
+import { profileSelector } from '../../../redux/selector';
+import { useDispatch, useSelector } from 'react-redux';
 
 const style = {
     position: 'absolute',
@@ -334,7 +338,7 @@ export default function DetailNanny() {
                             </div>
                             <div className={styles.BookOrReport}>
                                 <Box sx={{ marginLeft: '150px' }}>
-                                    <BookingButton
+                                    {userData.role == 2 && (<BookingButton
                                         variant="contained"
                                         sx={{ marginRight: '100px' }}
                                         onClick={() => {
@@ -342,10 +346,11 @@ export default function DetailNanny() {
                                         }}
                                     >
                                         Booking
-                                    </BookingButton>
-                                    <FeedbackButton variant="contained" onClick={handleOpen}>
-                                        Feedback
-                                    </FeedbackButton>
+                                    </BookingButton>)}
+                                    {userData.role == 0 && (
+                                        <FeedbackButton variant="contained" onClick={handleOpen}>
+                                            Feedback
+                                        </FeedbackButton>)}
                                 </Box>
                                 <Modal
                                     open={open}
