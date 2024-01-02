@@ -8,7 +8,6 @@ import { clearProfile } from '../../../redux/slices/profile.slice';
 import { profileSelector } from '../../../redux/selector';
 
 const DropDownMenu = ({ height, setHeight }) => {
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const data = useSelector(profileSelector);
@@ -31,18 +30,16 @@ const DropDownMenu = ({ height, setHeight }) => {
                 Profile
             </Link>
 
-            <Link className="dropdown-menu__item" to={ROUTE.CALENDAR} onClick={setHeight}>
-                Calendar
-            </Link>
-
-            {targetObject.role == 3 && (<Link
-                className="dropdown-menu__item"
-            // to={ROUTE.HIRED}
-            // onClick={setHeight}
-            >
-                Manage bookings
-            </Link>
+            {targetObject.role == 3 ? (
+                <Link className="dropdown-menu__item" to={ROUTE.HIRED} onClick={setHeight}>
+                    Manage bookings
+                </Link>
+            ) : (
+                <Link className="dropdown-menu__item" to={ROUTE.CALENDAR} onClick={setHeight}>
+                    Calendar
+                </Link>
             )}
+
             <div
                 className="dropdown-menu__item"
                 onClick={() => {
