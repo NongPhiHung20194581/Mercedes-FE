@@ -167,7 +167,11 @@ export default function Hired() {
                                                 <span
                                                     className="view-icon"
                                                     onClick={() => {
-                                                        navigate(`/details/${'647b77348af6c322511fed5d'}`);
+                                                        navigate(
+                                                            `/details/${
+                                                                typeof id === 'number' ? '647b77348af6c322511fed5d' : id
+                                                            }`,
+                                                        );
                                                     }}
                                                 >
                                                     <RemoveRedEyeIcon className="hired-table__icon" />

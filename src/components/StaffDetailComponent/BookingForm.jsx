@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 
-import { Button, InputLabel, Select, MenuItem } from '@mui/material';
+import { Button, InputLabel, Select, MenuItem, TextField } from '@mui/material';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 
@@ -28,17 +28,56 @@ function dateCaculate(date1, date2) {
     return parseInt(Difference_In_Days.toFixed()) + 1;
 }
 
+function getBookingTime(time, weekday) {
+    let day = 'MON';
+    switch (weekday) {
+        case 3:
+            day = 'TUE';
+            break;
+        case 4:
+            day = 'WED';
+            break;
+        case 5:
+            day = 'THU';
+            break;
+        case 6:
+            day = 'FRI';
+            break;
+        case 7:
+            day = 'SAT';
+            break;
+        default:
+            break;
+    }
+    return `${time}, ${day}`;
+}
+
 const BookingForm = ({ nanny, setIsBooking, notify }) => {
     const dispatch = useDispatch();
     const [message, setMessage] = React.useState('');
     const [subject, setSubject] = useState(null);
-    const [total, setTotal] = useState(nanny.salary);
+    const [schedule, setSchedule] = useState(null);
     const { userId } = useSelector(authSelector);
+    console.log(nanny);
 
     const handleBooking = () => {
         if (!userId) {
             setIsBooking(false);
             toast.error('Please login to use this feature!', {
+                position: 'bottom-right',
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+            });
+            return;
+        }
+
+        if (!subject || !schedule) {
+            toast.error('Please choose a subject', {
                 position: 'bottom-right',
                 autoClose: 4000,
                 hideProgressBar: false,
@@ -57,20 +96,36 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
             ...bookings,
             {
                 full_name: nanny.full_name,
-                time: '15:00-16:30, FRI',
+                time: getBookingTime(schedule.duration, schedule.weekdays),
                 status: 'Waiting',
                 code: 'VN',
-                phone: '0917343235',
+                phone: nanny.phone,
                 id: nanny.id,
                 created_at: new Date().valueOf(),
             },
         ];
         dispatch(setBooking(updateBooking));
+
+        toast.success('Create request successfully', {
+            position: 'bottom-right',
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+        });
+        setIsBooking(false);
     };
 
-    const handleChangeClass = (classId) => {
-        setSubject(() => dummyScheduleData.classes.find((c) => c.classId === classId));
+    const handleChangeClass = (e) => {
+        setSubject(() => dummyScheduleData.classes.find((c) => c.classId === e.target.value));
     };
+
+    useEffect(() => {
+        setSchedule(() => dummyScheduleData.schedule.find((s) => s.classId === subject?.classId) ?? null);
+    }, [subject]);
 
     return (
         <motion.div
@@ -135,7 +190,50 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                                 ))}
                             </Select>
                         </div>
-                        <div></div>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div style={{ width: '30%' }}>
+                            <span class="subtitle">Weekday</span>
+                            <Box
+                                sx={{
+                                    backgroundColor: '#d6d6d6',
+                                    fontSize: '16px',
+                                    borderRadius: '6px',
+                                    padding: '10px',
+                                    paddingLeft: '12px',
+                                }}
+                            >
+                                {schedule?.weekdays ?? 'Please choose a subject'}
+                            </Box>
+                        </div>
+                        <div style={{ width: '30%' }}>
+                            <span class="subtitle">Time</span>
+                            <Box
+                                sx={{
+                                    backgroundColor: '#d6d6d6',
+                                    fontSize: '16px',
+                                    borderRadius: '6px',
+                                    padding: '10px',
+                                    paddingLeft: '12px',
+                                }}
+                            >
+                                {schedule?.duration ?? 'Please choose a subject'}
+                            </Box>
+                        </div>
+                        <div style={{ width: '30%' }}>
+                            <span class="subtitle">Weeks</span>
+                            <Box
+                                sx={{
+                                    backgroundColor: '#d6d6d6',
+                                    fontSize: '16px',
+                                    borderRadius: '6px',
+                                    padding: '10px',
+                                    paddingLeft: '12px',
+                                }}
+                            >
+                                {schedule?.weeks ?? 'Please choose a subject'}
+                            </Box>
+                        </div>
                     </div>
                     {/* <span class="subtitle">合計</span> */}
                     {/* <Box
