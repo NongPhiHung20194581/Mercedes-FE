@@ -26,6 +26,9 @@ const DropDownMenu = ({ height, setHeight }) => {
 
     return (
         <AnimateHeight className="dropdown-menu" height={height} duration={250}>
+            <Link className="dropdown-menu__item" to={ROUTE.HOME} onClick={setHeight}>
+                Home
+            </Link>
             <Link className="dropdown-menu__item" to={ROUTE.PROFILE} onClick={setHeight}>
                 Profile
             </Link>

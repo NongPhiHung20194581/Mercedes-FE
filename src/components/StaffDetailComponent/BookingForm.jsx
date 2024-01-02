@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 
-import { Button } from '@mui/material';
+import { Button, InputLabel, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
-import { motion } from "framer-motion"
+import { motion } from 'framer-motion';
 
-import DatePicker from "react-datepicker";
+import DatePicker from 'react-datepicker';
 
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css';
 import { offDualRingLoading, onDualRingLoading } from '../../redux/slices/loading.slice';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { authSelector } from '../../redux/selector';
 import { toast } from 'react-toastify';
-
-
+import { dummyBookingData, dummyScheduleData } from '../../constants/dummy';
+import { setBooking } from '../../redux/slices/booking.slice';
 
 function formatNumber(number) {
     const formattedNumber = number?.toLocaleString('en-US');
@@ -28,62 +28,48 @@ function dateCaculate(date1, date2) {
     return parseInt(Difference_In_Days.toFixed()) + 1;
 }
 
-
 const BookingForm = ({ nanny, setIsBooking, notify }) => {
     const dispatch = useDispatch();
-    const currentUser = localStorage.getItem('userId');
     const [message, setMessage] = React.useState('');
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [subject, setSubject] = useState(null);
     const [total, setTotal] = useState(nanny.salary);
     const { userId } = useSelector(authSelector);
 
     const handleBooking = () => {
         if (!userId) {
             setIsBooking(false);
-            toast.error("Please login to use this feature!", {
-                position: "bottom-right",
+            toast.error('Please login to use this feature!', {
+                position: 'bottom-right',
                 autoClose: 4000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-                theme: "light",
+                theme: 'light',
             });
             return;
         }
 
-        dispatch(onDualRingLoading());
-        const formData = {
-            staffId: nanny.id,
-            endDay: startDate,
-            message: message,
-            total: total,
-            startDay: endDate,
-            userId: currentUser
-        };
+        const bookingsCache = localStorage.getItem('booking');
+        const bookings = !!bookingsCache ? JSON.parse(bookingsCache) : dummyBookingData;
+        const updateBooking = [
+            ...bookings,
+            {
+                full_name: nanny.full_name,
+                time: '15:00-16:30, FRI',
+                status: 'Waiting',
+                code: 'VN',
+                phone: '0917343235',
+                id: nanny.id,
+                created_at: new Date().valueOf(),
+            },
+        ];
+        dispatch(setBooking(updateBooking));
+    };
 
-        axios.post('https://babybuddies-be-dev.onrender.com/api/v1/bookings/store', formData)
-            .then(() => {
-                setMessage('');
-                setIsBooking(false);
-                dispatch(offDualRingLoading())
-                Swal.fire({
-                    title: 'Success',
-                    text: "Your reservation was successful!",
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                })
-            })
-            .catch(err => {
-                Swal.fire({
-                    title: 'Failed',
-                    text: "Reservation failed!",
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                })
-            })
+    const handleChangeClass = (classId) => {
+        setSubject(() => dummyScheduleData.classes.find((c) => c.classId === classId));
     };
 
     return (
@@ -93,7 +79,7 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
             transition={{
                 duration: 0.8,
                 delay: 0.2,
-                ease: [0, 0.71, 0.2, 1.01]
+                ease: [0, 0.71, 0.2, 1.01],
             }}
         >
             <Box
@@ -103,12 +89,10 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                 display={'flex'}
                 alignItems={'center'}
                 justifyContent={'center'}
-                padding={"20px 25px"}
+                padding={'20px 25px'}
             >
                 <Box width={'100%'} className="form-container">
-                    <h1 class="title">
-                        Booking Confirmation
-                    </h1>
+                    <h1 class="title">Booking Confirmation</h1>
                     <span class="subtitle">Staff Name</span>
                     <Box
                         sx={{
@@ -122,33 +106,36 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                         {nanny.full_name}
                     </Box>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div style={{ width: '49%' }}>
-                            <span class="subtitle">Start Date</span>
-                            <DatePicker
-                                showIcon
-                                selected={startDate}
-                                onChange={(date) => setStartDate(date)}
-                                className='datepicker'
-                                startDate={startDate}
-                                endDate={endDate}
-                            />
+                        <div
+                            style={{
+                                width: '100%',
+                                display: 'grid',
+                                gridTemplateColumns: '60px auto',
+                                alignItems: 'center',
+                                gap: '3px',
+                                marginTop: '10px',
+                            }}
+                        >
+                            <InputLabel
+                                id="demo-select-small-label"
+                                style={{ fontSize: '20px', color: '#007320', fontWeight: 'semibold !important' }}
+                            >
+                                Class:
+                            </InputLabel>
+                            <Select
+                                labelId="select-status"
+                                value={subject?.classId}
+                                onChange={handleChangeClass}
+                                size="small"
+                            >
+                                {dummyScheduleData.classes.map(({ classId, className }) => (
+                                    <MenuItem key={classId} value={classId}>
+                                        {className}
+                                    </MenuItem>
+                                ))}
+                            </Select>
                         </div>
-                        <div style={{ width: '49%' }}>
-                            <span class="subtitle">End Date</span>
-                            <DatePicker
-                                showIcon
-                                selected={endDate}
-                                onChange={(date) => {
-                                    setEndDate(date)
-                                    setTotal(dateCaculate(startDate, date) * nanny.salary)
-                                    console.log('change', dateCaculate(startDate, endDate), startDate, endDate);
-                                }}
-                                className='datepicker'
-                                startDate={startDate}
-                                endDate={endDate}
-                                minDate={startDate}
-                            />
-                        </div>
+                        <div></div>
                     </div>
                     {/* <span class="subtitle">合計</span> */}
                     {/* <Box
@@ -180,7 +167,7 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                         onChange={(e) => {
                             setMessage(e.target.value);
                         }}
-                        className='message-input'
+                        className="message-input"
                     ></textarea>
                     <Box display={'flex'} justifyContent={'space-around'} paddingBottom={'24px'}>
                         <Button
@@ -189,7 +176,7 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                                 fontWeight: '600',
                                 borderRadius: '15px',
                                 width: '160px',
-                                ':hover': { backgroundColor: 'rgb(135, 196, 120)' }
+                                ':hover': { backgroundColor: 'rgb(135, 196, 120)' },
                             }}
                             variant="contained"
                             onClick={handleBooking}
@@ -216,7 +203,7 @@ const BookingForm = ({ nanny, setIsBooking, notify }) => {
                 </Box>
             </Box>
         </motion.div>
-    )
-}
+    );
+};
 
 export default BookingForm;

@@ -111,6 +111,7 @@ export default function Hired() {
                         <TableBody>
                             {bookings
                                 .filter((b) => (filterStatus === Status.ALL ? true : b.status === filterStatus))
+                                .sort((a, b) => (b.created_at ?? 0) - (a.created_at ?? 0))
                                 .slice(indexOfFirstBooking, indexOfLastBooking)
                                 .map(({ full_name, time, status, code, phone, image_link, id }) => (
                                     <TableRow key={id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
