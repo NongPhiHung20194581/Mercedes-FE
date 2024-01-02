@@ -1,10 +1,10 @@
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 const subjectLabels = [
-    { label: 'Mã lớp', ref: 'classId', isNumber: true },
-    { label: 'Mã lớp kèm', ref: 'classIdSub', isNumber: true },
-    { label: 'Tên lớp lớp', ref: 'className', isNumber: false },
-    { label: 'Mã học phần', ref: 'courseId', isNumber: false },
+    { label: 'Class ID', ref: 'classId', isNumber: true },
+    { label: 'Secondary class ID', ref: 'classIdSub', isNumber: true },
+    { label: 'Class name', ref: 'className', isNumber: false },
+    { label: 'Course ID', ref: 'courseId', isNumber: false },
     // { label: 'Loại lớp', ref: 'classType' },
     // { label: 'TT lớp', ref: 'classStatus' },
     // { label: 'Yêu cầu', ref: 'require' },
@@ -14,34 +14,37 @@ const subjectLabels = [
 ];
 
 const scheduleLabels = [
-    { label: 'Thứ', ref: 'weekdays', isNumber: true },
-    { label: 'Thời gian', ref: 'duration', isNumber: false },
-    { label: 'Tuần học', ref: 'weeks', isNumber: false },
-    { label: 'Phòng học', ref: 'room', isNumber: false },
-    { label: 'Lớp học', ref: 'classId', isNumber: true },
+    { label: 'Weekday', ref: 'weekdays', isNumber: true },
+    { label: 'Time', ref: 'duration', isNumber: false },
+    { label: 'Week', ref: 'weeks', isNumber: false },
+    { label: 'Room', ref: 'room', isNumber: false },
+    { label: 'Class ID', ref: 'classId', isNumber: true },
 ];
 
 const getCalendarDescription = (data) => {
-    let role;
-    let action;
+    let desc1, desc2;
+    console.log(data.role);
     switch (data.role) {
         case '2':
-            role = 'giảng viên';
-            action = 'dạy';
+        case 2:
+            desc1 = `Classes in charge of lecturer ${data.name}`;
+            desc2 = `Detailed schedule of lecturer ${data.name}`;
             break;
         case '1':
-            role = 'trợ giảng';
-            action = 'hỗ trợ';
+        case 1:
+            desc1 = `Support classes of tutor ${data.name}`;
+            desc2 = `Detailed schedule of tutor ${data.name}`;
             break;
         case '0':
-            role = 'sinh viên';
-            action = 'đăng ký';
+        case 0:
+            desc1 = `Registered classes of student ${data.name}`;
+            desc2 = `Detailed schedule of student ${data.name}`;
             break;
         default:
             break;
     }
 
-    return { desc1: `Các lớp ${action} của ${role} ${data.name}`, desc2: `Thời khóa biểu các lớp ${action}` };
+    return { desc1, desc2 };
 };
 
 const Calendar = ({ data, classes, schedule }) => {
@@ -50,7 +53,7 @@ const Calendar = ({ data, classes, schedule }) => {
         <div className="main-session calendar-container">
             <div className="calendar-title">
                 <CalendarMonthIcon className="calendar-icon" />
-                THỜI KHÓA BIỂU
+                SCHEDULE
             </div>
             <p className="calendar-desc">{desc1}</p>
             <table>
