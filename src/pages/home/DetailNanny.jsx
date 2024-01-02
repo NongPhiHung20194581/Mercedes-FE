@@ -177,15 +177,15 @@ export default function DetailNanny() {
           fetchData();
           handleClose();
           dispatch(offDualRingLoading());
-          notify('評価の追加に成功しました！');
+          notify('You have successfully added your rating!');
         })
         .catch(err => {
           handleClose();
           dispatch(offDualRingLoading());
-          notify_failed('評価の追加に失敗しました！まず、このスタッフを予約する必要があります。');
+          notify_failed('Adding a rating failed! First, you need to book this tutor.');
         })
     } else {
-      notify_failed('ログインしていないため、評価することはできません。');
+      notify_failed('Since you are not logged in, you cannot rate it.');
     }
   }
   const handleOpen = () => setOpen(true);
@@ -380,7 +380,7 @@ export default function DetailNanny() {
               </div>
               <div className={styles.BookOrReport}>
                 <Box className={styles.BookOrReportButton}>
-                  {userId !== '647b77348af6c322511fed5e' ? (
+                  {userId === '647b77348af6c322511fed78' && (
                     <BookingButton
                       variant="contained"
                       sx={{ marginRight: '100px', width: '200px', fontWeight: 600 }}
@@ -390,14 +390,16 @@ export default function DetailNanny() {
                     >
                       Booking
                     </BookingButton>
-                  ) : null}
-                  <FeedbackButton
-                    variant="contained"
-                    onClick={handleOpen}
-                    sx={{ width: '300px', fontWeight: 600 }}
-                  >
-                    Feedback
-                  </FeedbackButton>
+                  )}
+                  {userId === '647b77348af6c322511fed5e' && (
+                    <FeedbackButton
+                      variant="contained"
+                      onClick={handleOpen}
+                      sx={{ width: '300px', fontWeight: 600 }}
+                    >
+                      Feedback
+                    </FeedbackButton>
+                  )}
                 </Box>
                 <Modal
                   open={open}
